@@ -1,7 +1,5 @@
-# Tauri + React + Typescript
+# Warpinator Tauri
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+A Warpinator client that is powered by Rust and Tauri for fast and secure file transfers.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Still in development

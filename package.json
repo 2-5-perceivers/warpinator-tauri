@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-os": "^2.3.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "radix-ui": "^1.4.3",
@@ -32,6 +33,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
+    "prettier": "3.8.1",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
   }

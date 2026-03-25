@@ -1,50 +1,63 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { platform } from "@tauri-apps/plugin-os";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { CursorRectangleSelection02Icon } from "@hugeicons/core-free-icons";
+import { WindowControls } from "@/components/window-controls/WindowControls.tsx";
+import { WarpinatorSidebar } from "@/components/sidebar/WarpinatorSidebar.tsx";
+import React from "react";
+
+function TopBar({ children, os }: { children?: React.ReactNode; os: string }) {
+  return (
+    <div className="h-11 shrink-0 flex items-center relative border-b border-sidebar-border/50 bg-sidebar">
+      <div data-tauri-drag-region className="absolute inset-0" />
+      <div className="relative flex items-center justify-between w-full px-4 pe-0 pointer-events-none">
+        <div className="pointer-events-auto">{children}</div>
+        <div className="pointer-events-auto">
+          <WindowControls os={os} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function EmptyMain() {
+  return (
+    <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center bg-background">
+      <HugeiconsIcon
+        icon={CursorRectangleSelection02Icon}
+        className="size-12"
+      />
+      <div>
+        <p className="text-sm font-medium text-foreground">
+          No device selected
+        </p>
+        <p className="text-xs text-foreground/50 mt-1 leading-relaxed">
+          Select a device on the left
+          <br />
+          to see its transfers
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
+  const os = platform();
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
+    <TooltipProvider>
+      <SidebarProvider
+        style={{ minHeight: 0 }}
+        className="h-screen overflow-hidden bg-background"
       >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+        <WarpinatorSidebar os={os} />
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <TopBar os={os} />
+          <EmptyMain />
+        </div>
+      </SidebarProvider>
+    </TooltipProvider>
   );
 }
 
