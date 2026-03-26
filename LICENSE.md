@@ -78,7 +78,7 @@ modification follow.
 works, such as semiconductor masks.
 
 "The Program" refers to any copyrightable work licensed under this
-License. Each licensee is addressed as "you".  "Licensees" and
+License. Each licensee is addressed as "you". "Licensees" and
 "recipients" may be individuals or organizations.
 
 To "modify" a work means to copy from or adapt all or part of the work
@@ -112,7 +112,7 @@ menu, a prominent item in the list meets this criterion.
 1. Source Code.
 
 The "source code" for a work means the preferred form of the work
-for making modifications to it.  "Object code" means any non-source
+for making modifications to it. "Object code" means any non-source
 form of a work.
 
 A "Standard Interface" means an interface that either is an official
@@ -353,8 +353,8 @@ this License without regard to the additional permissions.
 
 When you convey a copy of a covered work, you may at your option
 remove any additional permissions from that copy, or from any part of
-it.  (Additional permissions may be written to require their own
-removal in certain cases when you modify the work.)  You may place
+it. (Additional permissions may be written to require their own
+removal in certain cases when you modify the work.) You may place
 additional permissions on material, added by you to a covered work,
 for which you have or can give appropriate copyright permission.
 
@@ -504,7 +504,7 @@ then you must either (1) cause the Corresponding Source to be so
 available, or (2) arrange to deprive yourself of the benefit of the
 patent license for this particular work, or (3) arrange, in a manner
 consistent with the requirements of this License, to extend the patent
-license to downstream recipients.  "Knowingly relying" means you have
+license to downstream recipients. "Knowingly relying" means you have
 actual knowledge that, but for the patent license, your conveying the
 covered work in a country, or your recipient's use of the covered work
 in a country, would infringe one or more identifiable patents in that

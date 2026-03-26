@@ -3,7 +3,7 @@ name = "warpinator-tauri"
 version = "0.1.0"
 description = "A Tauri App"
 authors = ["Rares Vanca"]
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -26,3 +26,9 @@ tauri-plugin-os = "2.3.2"
 warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", features = ["serde"] }
 tokio = { version = "1.50.0", features = ["full"] }
 
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = 3
+strip = true
