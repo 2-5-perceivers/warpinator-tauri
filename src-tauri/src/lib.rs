@@ -60,6 +60,7 @@ pub fn run() {
                 .default_bind_addr_v4()
                 .default_bind_addr_v6()
                 .default_hostname()
+                .username("aaa")
                 .build();
 
             let service_id = "warpinator-tauri";

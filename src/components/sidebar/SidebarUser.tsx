@@ -23,7 +23,8 @@ import {
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import React from "react";
-import { AboutDialog } from "@/components/sidebar/AboutDialog.tsx";
+import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
+import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
 import { exit } from "@tauri-apps/plugin-process";
 
 export function SidebarUser({
@@ -37,6 +38,8 @@ export function SidebarUser({
 }) {
   const { isMobile } = useSidebar();
   const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
+  const [isSettingsDialogOpen, setSettingsDialogOpen] = React.useState(false);
+
   const quitApp = () => {
     exit(0).catch(() => {
       console.log("Failed to quit the app");
@@ -70,6 +73,7 @@ export function SidebarUser({
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="truncate text-xs">{user.address}</span>
                 </div>
+                <HugeiconsIcon icon={Settings01Icon} />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -89,7 +93,7 @@ export function SidebarUser({
                   <HugeiconsIcon icon={ArrowReloadHorizontalIcon} />
                   Restart
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setSettingsDialogOpen(true)}>
                   <HugeiconsIcon icon={Settings01Icon} />
                   Settings
                 </DropdownMenuItem>
@@ -107,6 +111,10 @@ export function SidebarUser({
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
+      <SettingsDialog
+        open={isSettingsDialogOpen}
+        onOpenChange={setSettingsDialogOpen}
+      />
       <AboutDialog open={isAboutDialogOpen} onOpenChange={setAboutDialogOpen} />
     </>
   );

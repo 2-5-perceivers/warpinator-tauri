@@ -1,16 +1,33 @@
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ComputerPhoneSyncIcon } from "@hugeicons/core-free-icons";
+import { ComputerPhoneSyncIcon, Link01Icon } from "@hugeicons/core-free-icons";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
+import { Button } from "@/components/ui/button.tsx";
 
 export function SidebarEmpty() {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center">
-      <HugeiconsIcon
-        icon={ComputerPhoneSyncIcon}
-        className="size-12 text-sidebar-primary/60"
-      />
-      <div>
-        <p className="text-foreground/50">No device found</p>
-      </div>
-    </div>
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon" className="size-12">
+          <HugeiconsIcon icon={ComputerPhoneSyncIcon} className="size-6" />
+        </EmptyMedia>
+        <EmptyTitle>No Devices Found</EmptyTitle>
+        <EmptyDescription className="max-w-xs text-pretty">
+          Check the group code or try manually connecting.
+        </EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button variant="outline">
+          <HugeiconsIcon icon={Link01Icon} />
+          Manual connection
+        </Button>
+      </EmptyContent>
+    </Empty>
   );
 }

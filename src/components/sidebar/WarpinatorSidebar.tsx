@@ -12,6 +12,7 @@ import { SidebarEmpty } from "@/components/sidebar/SidebarEmpty.tsx";
 import { useRemotes } from "@/hooks/use-remotes.ts";
 import { SidebarRemote } from "@/components/sidebar/SidebarRemote.tsx";
 import React from "react";
+import { SidebarSearchEmpty } from "@/components/sidebar/SidebarSearchEmpty.tsx";
 
 export function WarpinatorSidebar({ os }: { os: string }) {
   const remotes = useRemotes();
@@ -55,8 +56,10 @@ export function WarpinatorSidebar({ os }: { os: string }) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        {filteredRemotes.length == 0 ? (
+        {remotes.length == 0 ? (
           <SidebarEmpty />
+        ) : filteredRemotes.length == 0 ? (
+          <SidebarSearchEmpty />
         ) : (
           <SidebarMenu>
             {filteredRemotes.map((remote) => (
@@ -66,6 +69,7 @@ export function WarpinatorSidebar({ os }: { os: string }) {
                   name: remote.display_name,
                   address: remote.username + "@" + remote.hostname,
                   avatar: remote.picture_data,
+                  state: remote.state,
                 }}
               />
             ))}
