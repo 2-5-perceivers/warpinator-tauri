@@ -1,19 +1,16 @@
 use std::sync::Arc;
 
+use tauri::image::Image;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
-use tauri::{AppHandle, Emitter, Manager, State};
-use tauri::image::Image;
+use tauri::{AppHandle, Emitter, Manager};
+use tauri_plugin_store::StoreExt;
 use tokio::sync::oneshot;
 use warpinator_lib::WarpinatorServer;
 use warpinator_lib::config::user::UserConfig;
-use warpinator_lib::remote_manager::RemoteManager;
-use warpinator_lib::types::remote::Remote;
 
-#[tauri::command]
-async fn get_remotes(remotes: State<'_, RemoteManager>) -> Result<Vec<Remote>, String> {
-    Ok(remotes.remotes().await)
-}
+#[macro_use]
+mod commands;
 
 fn spawn_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
     let icon = include_bytes!("../icons/symbolic.png");
@@ -53,17 +50,56 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
-        .invoke_handler(tauri::generate_handler![get_remotes])
+        .invoke_handler(tauri::generate_handler![
+            commands::remotes::get_remote,
+            commands::remotes::get_remotes
+        ])
         .setup(|app| {
             let handle = app.handle().clone();
+
+            let store = app.store("settings.json")?;
+
+            // Reading settings
+            let theme = store
+                .get("ui-theme")
+                .and_then(|v| v.as_str().map(|s| s.to_string()))
+                .unwrap_or_else(|| "system".to_string());
+
+            let group_code = store
+                .get("group-code")
+                .and_then(|v| v.as_str().map(|s| s.to_string()))
+                .unwrap_or_else(|| "Warpinator".to_string());
+
+            let display_name = store
+                .get("display-name")
+                .and_then(|v| v.as_str().map(|s| s.to_string()))
+                .unwrap_or_else(|| whoami::realname().unwrap_or("Warpinator".to_string()));
+
+            let username = whoami::username().unwrap_or_else(|_| "warpinator".to_string());
+            let hostname = whoami::hostname().unwrap_or_else(|_| "warpinator".to_string());
+
+            let service_id = store
+                .get("service-id")
+                .and_then(|v| v.as_str().map(|s| s.to_string()))
+                .unwrap_or_else(|| {
+                    let clean = hostname.replace(' ', "-").replace('_', "-").to_uppercase();
+                    let clean = &clean[..clean.len().min(30)];
+                    let id = uuid::Uuid::new_v4().simple().to_string().to_uppercase();
+                    let s_uuid = format!("{}-{}", clean, id);
+                    store.set("service-id", s_uuid.clone());
+                    s_uuid
+                });
+
             let user_config = UserConfig::builder()
                 .default_bind_addr_v4()
                 .default_bind_addr_v6()
-                .default_hostname()
-                .username("aaa")
+                .hostname(&hostname)
+                .username(&username)
+                .display_name(&display_name)
+                .group_code(&group_code)
                 .build();
 
-            let service_id = "warpinator-tauri";
+            let ip_addr = user_config.bind_addr_v4.map(|ip| ip.to_string()).unwrap_or_default();
 
             let server = WarpinatorServer::builder()
                 .user_config(user_config)
@@ -99,6 +135,18 @@ pub fn run() {
             tauri::async_runtime::spawn_blocking(move || {
                 let _ = spawn_tray(&handle);
             });
+
+            let window = app.get_webview_window("main").unwrap();
+            window.eval(&format!(
+                "window.__WARPINATOR_INIT__ = {};",
+                serde_json::json!({
+                    "theme": theme,
+                    "display_name": display_name,
+                    "hostname": hostname,
+                    "username": username,
+                    "ip": ip_addr,
+                })
+            ))?;
 
             Ok(())
         })

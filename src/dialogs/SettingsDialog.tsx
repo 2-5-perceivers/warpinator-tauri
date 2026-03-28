@@ -22,6 +22,7 @@ import { Folder02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Switch } from "@/components/ui/switch.tsx";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
+import { useTheme } from "@/contexts/ThemeProvider.tsx";
 
 export function SettingsDialog({
   open,
@@ -30,6 +31,13 @@ export function SettingsDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const { theme, setTheme } = useTheme();
+
+  const onThemeChange = (theme: string) => {
+    if (theme.trim() == "") return;
+    setTheme(theme as "dark" | "light" | "system");
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="m-8 h-full max-h-[80vh] overflow-hidden">
@@ -149,8 +157,9 @@ export function SettingsDialog({
                   <ToggleGroup
                     type="single"
                     variant="outline"
-                    id="autoaccept"
-                    defaultValue="system"
+                    id="theme"
+                    value={theme}
+                    onValueChange={onThemeChange}
                   >
                     <ToggleGroupItem value="system" className="flex-1/3">
                       System

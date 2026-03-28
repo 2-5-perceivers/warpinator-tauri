@@ -6,6 +6,8 @@ import { RemoteState } from "@/types/remote.ts";
 
 export function SidebarRemote({
   remote,
+  onClick,
+  isSelected,
 }: {
   remote: {
     name: string;
@@ -13,13 +15,17 @@ export function SidebarRemote({
     avatar: string | undefined | null;
     state: RemoteState;
   };
+  onClick: () => void;
+  isSelected: boolean;
 }) {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
         size="lg"
-        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group"
+        className="data-selected:bg-sidebar-accent data-selected:text-sidebar-accent-foreground group"
         data-remote-state={remote.state.type}
+        data-selected={isSelected}
+        onClick={onClick}
       >
         <Avatar className="h-8 w-8 rounded-lg after:border-0 bg-transparent group-data-[remote-state=awaiting_duplex]:animate-pulse group-data-[remote-state=connecting]:animate-pulse group-data-[remote-state=error]:outline outline-destructive">
           {remote.avatar ? (
@@ -29,7 +35,7 @@ export function SidebarRemote({
               className="rounded-lg not-group-data-[remote-state=connected]:opacity-50"
             />
           ) : (
-            <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground not-data-[remote-state=connected]:opacity-50">
+            <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground not-group-data-[remote-state=connected]:opacity-50">
               <HugeiconsIcon icon={UserIcon} />
             </AvatarFallback>
           )}

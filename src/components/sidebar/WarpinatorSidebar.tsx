@@ -13,10 +13,12 @@ import { useRemotes } from "@/hooks/use-remotes.ts";
 import { SidebarRemote } from "@/components/sidebar/SidebarRemote.tsx";
 import React from "react";
 import { SidebarSearchEmpty } from "@/components/sidebar/SidebarSearchEmpty.tsx";
+import { useRemoteContext } from "@/contexts/RemoteContext.tsx";
 
 export function WarpinatorSidebar({ os }: { os: string }) {
   const remotes = useRemotes();
   const [search, setSearch] = React.useState("");
+  const { selectedRemoteUuid, setSelectedRemote } = useRemoteContext();
 
   const filteredRemotes = React.useMemo(() => {
     if (!search) {
@@ -71,6 +73,8 @@ export function WarpinatorSidebar({ os }: { os: string }) {
                   avatar: remote.picture_data,
                   state: remote.state,
                 }}
+                onClick={() => setSelectedRemote(remote.uuid)}
+                isSelected={selectedRemoteUuid === remote.uuid}
               />
             ))}
           </SidebarMenu>
@@ -78,9 +82,7 @@ export function WarpinatorSidebar({ os }: { os: string }) {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border p-2.5">
-        <SidebarUser
-          user={{ name: "User", address: "192.168.0.1", avatar: undefined }}
-        />
+        <SidebarUser />
       </SidebarFooter>
     </Sidebar>
   );

@@ -26,16 +26,9 @@ import React from "react";
 import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
 import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
 import { exit } from "@tauri-apps/plugin-process";
+import { warpinator_init } from "@/types/warp-init.ts";
 
-export function SidebarUser({
-  user,
-}: {
-  user: {
-    name: string;
-    address: string;
-    avatar: string | undefined | null;
-  };
-}) {
+export function SidebarUser({ avatar }: { avatar?: string }) {
   const { isMobile } = useSidebar();
   const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
   const [isSettingsDialogOpen, setSettingsDialogOpen] = React.useState(false);
@@ -45,6 +38,8 @@ export function SidebarUser({
       console.log("Failed to quit the app");
     });
   };
+
+  const init = warpinator_init;
 
   return (
     <>
@@ -57,10 +52,10 @@ export function SidebarUser({
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="h-8 w-8 rounded-lg after:border-0 bg-sidebar-primary">
-                  {user.avatar ? (
+                  {avatar ? (
                     <AvatarImage
-                      src={user.avatar}
-                      alt={user.name}
+                      src={avatar}
+                      alt={init.display_name}
                       className="rounded-lg"
                     />
                   ) : (
@@ -70,8 +65,12 @@ export function SidebarUser({
                   )}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.address}</span>
+                  <span className="truncate font-medium">
+                    {init.display_name}
+                  </span>
+                  <span className="truncate text-xs">
+                    {init.username}@{init.hostname}
+                  </span>
                 </div>
                 <HugeiconsIcon icon={Settings01Icon} />
               </SidebarMenuButton>
