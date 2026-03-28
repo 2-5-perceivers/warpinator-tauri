@@ -24,6 +24,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import React from "react";
 import { AboutDialog } from "@/components/sidebar/AboutDialog.tsx";
+import { exit } from "@tauri-apps/plugin-process";
 
 export function SidebarUser({
   user,
@@ -36,6 +37,11 @@ export function SidebarUser({
 }) {
   const { isMobile } = useSidebar();
   const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
+  const quitApp = () => {
+    exit(0).catch(() => {
+      console.log("Failed to quit the app");
+    });
+  };
 
   return (
     <>
@@ -93,7 +99,7 @@ export function SidebarUser({
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onSelect={quitApp}>
                 <HugeiconsIcon icon={LogoutSquare01Icon} />
                 Quit
               </DropdownMenuItem>
