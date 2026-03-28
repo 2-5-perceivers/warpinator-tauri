@@ -18,13 +18,20 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = ["tray-icon"] }
-tauri-plugin-opener = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-tauri-plugin-os = "2.3.2"
+tracing = { version = "0.1.44", features = ["release_max_level_info"] }
 warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", features = ["serde"] }
 tokio = { version = "1.50.0", features = ["full"] }
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-os = "2.3.2"
+tauri-plugin-opener = "2"
+tauri-plugin-store = "2"
+tauri-plugin-process = "2"
+tauri-plugin-dialog = "2"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance = "2"
 
 [profile.release]
 panic = "abort"
