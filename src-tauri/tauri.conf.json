@@ -13,7 +13,7 @@
     "windows": [
       {
         "title": "Warpinator",
-        "width": 800,
+        "width": 1000,
         "height": 600,
         "minWidth": 800,
         "minHeight": 400,

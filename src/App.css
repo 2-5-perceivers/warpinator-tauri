@@ -123,7 +123,7 @@
   }
 
   body {
-    @apply text-foreground select-none overflow-hidden;
+    @apply text-foreground select-none;
   }
 
   html {
@@ -133,17 +133,11 @@
 
 html,
 body {
-  background: transparent !important;
   margin: 0;
   height: 100vh;
   max-height: 100vh;
   border-radius: var(--radius-xl);
   clip-path: inset(0 round var(--radius-xl));
-}
-
-body {
-  position: relative;
-  overflow: hidden;
 }
 
 body::after {
@@ -161,5 +155,38 @@ body::after {
 }
 
 #root {
-  @apply bg-background text-foreground select-none overflow-hidden;
+  @apply bg-background text-foreground select-none;
+}
+
+/* Animations */
+.transfer-details-collapsible {
+  overflow: hidden;
+}
+.transfer-details-collapsible[data-state="open"] {
+  animation: slideDown 250ms ease-out;
+}
+.transfer-details-collapsible[data-state="closed"] {
+  animation: slideUp 250ms ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
 }

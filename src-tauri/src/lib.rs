@@ -9,6 +9,9 @@ use tokio::sync::oneshot;
 use warpinator_lib::WarpinatorServer;
 use warpinator_lib::config::user::UserConfig;
 
+use crate::commands::remotes::*;
+use crate::commands::transfers::*;
+
 #[macro_use]
 mod commands;
 
@@ -51,8 +54,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![
-            commands::remotes::get_remote,
-            commands::remotes::get_remotes
+            get_remote,
+            get_remotes,
+            new_transfer,
+            get_transfers,
         ])
         .setup(|app| {
             let handle = app.handle().clone();
