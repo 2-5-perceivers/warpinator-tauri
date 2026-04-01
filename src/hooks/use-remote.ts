@@ -4,15 +4,6 @@ import { useEffect, useState } from "react";
 import { WarpEvent } from "@/types/warp-event";
 import { Remote } from "@/types/remote";
 
-export function imageToDataUrl(bytes: number[]): string | null {
-  if (bytes.length === 0) return null;
-  const binary = new Uint8Array(bytes).reduce(
-    (acc, byte) => acc + String.fromCharCode(byte),
-    "",
-  );
-  return `data:image/png;base64,${btoa(binary)}`;
-}
-
 export function useRemote(remoteUuid: string | null) {
   const [remote, setRemote] = useState<Remote | null>(null);
 
@@ -27,18 +18,7 @@ export function useRemote(remoteUuid: string | null) {
         remoteUuid,
       });
       if (!remote) return;
-      if (remote.picture) {
-        setRemote({
-          ...remote,
-          picture_data: imageToDataUrl(remote.picture),
-          picture: null,
-        });
-      } else {
-        setRemote({
-          ...remote,
-          picture_data: null,
-        });
-      }
+      setRemote(remote);
     };
 
     fetchRemote();

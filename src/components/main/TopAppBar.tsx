@@ -97,17 +97,14 @@ export function TopBar({ os }: { os: string }) {
               className="size-7 shrink-0 rounded-lg after:border-0 bg-transparent pointer-events-auto"
               key={remote.uuid}
             >
-              {remote.picture_data ? (
-                <AvatarImage
-                  src={remote.picture_data}
-                  alt={remote.display_name}
-                  className="rounded-lg"
-                />
-              ) : (
-                <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <HugeiconsIcon icon={UserIcon} className="size-4" />
-                </AvatarFallback>
-              )}
+              <AvatarImage
+                src={remote.picture ?? undefined}
+                alt={remote.display_name}
+                className="rounded-lg"
+              />
+              <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <HugeiconsIcon icon={UserIcon} className="size-4" />
+              </AvatarFallback>
             </Avatar>
           </HoverCardTrigger>
           <HoverCardContent className="flex flex-col items-center">
@@ -115,17 +112,14 @@ export function TopBar({ os }: { os: string }) {
               className="size-16 shrink-0 rounded-lg after:border-0 bg-transparent m-2"
               key={remote.uuid}
             >
-              {remote.picture_data ? (
-                <AvatarImage
-                  src={remote.picture_data}
-                  alt={remote.display_name}
-                  className="rounded-lg"
-                />
-              ) : (
-                <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <HugeiconsIcon icon={UserIcon} className="size-8" />
-                </AvatarFallback>
-              )}
+              <AvatarImage
+                src={remote.picture ?? undefined}
+                alt={remote.display_name}
+                className="rounded-lg"
+              />
+              <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <HugeiconsIcon icon={UserIcon} className="size-8" />
+              </AvatarFallback>
             </Avatar>
             <Separator className="my-2" />
             <Item size="xs">

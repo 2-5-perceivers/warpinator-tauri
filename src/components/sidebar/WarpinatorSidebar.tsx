@@ -70,7 +70,7 @@ export function WarpinatorSidebar({ os }: { os: string }) {
                 remote={{
                   name: remote.display_name,
                   address: remote.username + "@" + remote.hostname,
-                  avatar: remote.picture_data,
+                  picture: remote.picture,
                   state: remote.state,
                 }}
                 onClick={() => setSelectedRemote(remote.uuid)}

@@ -3,7 +3,6 @@ import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState } from "react";
 import { WarpEvent } from "@/types/warp-event";
 import { Remote } from "@/types/remote";
-import { imageToDataUrl } from "@/hooks/use-remote.ts";
 
 export function useRemotes() {
   const [remotes, setRemotes] = useState<Remote[]>([]);
@@ -12,24 +11,12 @@ export function useRemotes() {
     const fetchRemotes = async () => {
       const list = await invoke<Remote[]>("get_remotes");
       setRemotes(
-        list
-          .filter((remote) => {
-            return !(
-              remote.state.type == "error" &&
-              remote.state.content == "group_code_mismatch"
-            );
-          })
-          .map((remote) => {
-            if (remote.picture) {
-              return {
-                ...remote,
-                picture_data: imageToDataUrl(remote.picture),
-                picture: null,
-              };
-            } else {
-              return { ...remote, picture_data: null };
-            }
-          }),
+        list.filter((remote) => {
+          return !(
+            remote.state.type == "error" &&
+            remote.state.content == "group_code_mismatch"
+          );
+        }),
       );
     };
 

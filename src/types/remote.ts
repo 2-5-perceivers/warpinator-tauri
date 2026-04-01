@@ -21,8 +21,7 @@ export interface Remote {
   display_name: string;
   username: string;
   hostname: string;
-  picture: number[] | null;
-  picture_data: string | null;
+  picture: string | null;
   state: RemoteState;
   service_static: boolean;
   service_available: boolean;

@@ -15,6 +15,7 @@ use crate::commands::transfers::*;
 
 #[macro_use]
 mod commands;
+mod avatars;
 
 fn spawn_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
     let icon = include_bytes!("../icons/symbolic.png");
@@ -64,6 +65,7 @@ pub fn run() {
             get_theme_settings,
             get_user_config,
         ])
+        .register_asynchronous_uri_scheme_protocol("avatars", avatars::avatars_protocol_handler)
         .setup(|app| {
             let handle = app.handle().clone();
 
