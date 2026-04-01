@@ -6,22 +6,25 @@ import { WarpinatorSidebar } from "@/components/sidebar/WarpinatorSidebar.tsx";
 import { WarpinatorMain } from "@/components/main/WarpinatorMain.tsx";
 import { RemoteProvider } from "@/contexts/RemoteContext.tsx";
 import { ThemeProvider } from "@/contexts/ThemeProvider.tsx";
+import { SettingsProvider } from "@/contexts/SettingsProvider.tsx";
 
 function App() {
   const os = platform();
   return (
     <ThemeProvider>
-      <TooltipProvider>
-        <SidebarProvider
-          style={{ minHeight: 0 }}
-          className="h-screen overflow-hidden bg-background"
-        >
-          <RemoteProvider>
-            <WarpinatorSidebar os={os} />
-            <WarpinatorMain os={os} />
-          </RemoteProvider>
-        </SidebarProvider>
-      </TooltipProvider>
+      <SettingsProvider>
+        <TooltipProvider>
+          <SidebarProvider
+            style={{ minHeight: 0 }}
+            className="h-screen overflow-hidden bg-background"
+          >
+            <RemoteProvider>
+              <WarpinatorSidebar os={os} />
+              <WarpinatorMain os={os} />
+            </RemoteProvider>
+          </SidebarProvider>
+        </TooltipProvider>
+      </SettingsProvider>
     </ThemeProvider>
   );
 }

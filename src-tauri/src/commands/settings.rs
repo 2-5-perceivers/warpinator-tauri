@@ -1,5 +1,11 @@
+use std::io::Cursor;
+use std::path::{Path, PathBuf};
+
+use image::{ImageFormat, ImageReader};
 use serde::Serialize;
-use tauri::State;
+use tauri::{Manager, State};
+use tauri_plugin_dialog::DialogExt;
+use tauri_plugin_store::StoreExt;
 use warpinator_lib::config::user::UserConfig;
 
 #[derive(Serialize, Clone)]
@@ -28,4 +34,96 @@ pub async fn get_user_config(config: State<'_, UserConfig>) -> Result<Configurat
         username: config.username.clone(),
         display_name: config.display_name.read().await.clone(),
     })
+}
+
+#[tauri::command]
+pub async fn update_user_profile_picture(
+    app_handle: tauri::AppHandle,
+    config: State<'_, UserConfig>,
+    path: &Path,
+) -> Result<(), String> {
+    let avatar_path =
+        app_handle.path().app_data_dir().map_err(|e| e.to_string())?.join("avatar.png");
+
+    let path = path.to_owned();
+
+    let image = tokio::task::spawn_blocking(move || {
+        let img = ImageReader::open(path).map_err(|e| e.to_string())?.decode().map_err(|e| e.to_string())?;
+        let resized = img.resize_to_fill(256, 256,  image::imageops::FilterType::Lanczos3);
+
+        let mut png_bytes: Vec<u8> = Vec::new();
+
+        resized.write_to(&mut Cursor::new(&mut png_bytes), ImageFormat::Png)
+            .map_err(|e| e.to_string())?;
+
+        std::fs::write(avatar_path, &png_bytes).map_err(|e| e.to_string())?;
+
+        Ok::<_, String>(png_bytes)
+    }).await.map_err(|e| format!("Task panicked: {}", e))? // Handle JoinError
+        ?;
+    config.set_picture(Some(&*image)).await;
+
+    app_handle
+        .store("settings.json")
+        .map_err(|_| "Failed to get store")?
+        .set("profile-picture", "avatar.png");
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn select_user_profile_picture(
+    app_handle: tauri::AppHandle,
+    config: State<'_, UserConfig>,
+) -> Result<(), String> {
+    let app = app_handle.clone();
+
+    let picked_image = tokio::task::spawn_blocking(move || {
+        app_handle
+            .dialog()
+            .file()
+            .set_title("Select Profile Picture")
+            .add_filter("Image Files", &["png", "jpg", "jpeg"])
+            .blocking_pick_file()
+    })
+    .await
+    .map_err(|e| e.to_string())?;
+
+    if let Some(path) = picked_image {
+        update_user_profile_picture(
+            app,
+            config,
+            path.into_path().map_err(|_| "Invalid path")?.as_ref(),
+        )
+        .await?;
+    }
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn clear_user_profile_picture(
+    app_handle: tauri::AppHandle,
+    config: State<'_, UserConfig>,
+) -> Result<(), String> {
+    let avatar_path =
+        app_handle.path().app_data_dir().map_err(|e| e.to_string())?.join("avatar.png");
+
+    app_handle.store("settings.json").map_err(|_| "Failed to get store")?.delete("profile-picture");
+    tokio::fs::remove_file(avatar_path).await.map_err(|e| e.to_string())?;
+    config.set_picture(None).await;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn update_user_display_name(
+    app_handle: tauri::AppHandle,
+    config: State<'_, UserConfig>,
+    name: String,
+) -> Result<(), String> {
+    config.set_display_name(&*name).await;
+    app_handle.store("settings.json").map_err(|_| "Failed to get store")?.set("display-name", name);
+
+    Ok(())
 }

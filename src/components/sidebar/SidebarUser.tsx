@@ -22,17 +22,17 @@ import {
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import React, { useEffect } from "react";
+import React from "react";
 import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
 import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
 import { exit } from "@tauri-apps/plugin-process";
-import { Configuration, getConfiguration } from "@/lib/configuration.ts";
+import { useSettings } from "@/contexts/SettingsProvider.tsx";
 
-export function SidebarUser({ avatar }: { avatar?: string }) {
+export function SidebarUser() {
   const { isMobile } = useSidebar();
   const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
   const [isSettingsDialogOpen, setSettingsDialogOpen] = React.useState(false);
-  const [configuration, setConfiguration] = React.useState<Configuration>();
+  const { settings } = useSettings();
 
   const quitApp = () => {
     exit(0).catch(() => {
@@ -40,10 +40,10 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
     });
   };
 
-  useEffect(() => {
-    // Fetch the configuration when the component mounts
-    getConfiguration().then(setConfiguration);
-  }, []);
+  const avatarSrc = React.useMemo(() => {
+    if (settings) return `avatars://self?v=${settings.avatarVersion}`;
+    return undefined;
+  }, [settings?.avatarVersion]);
 
   return (
     <>
@@ -56,10 +56,10 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="h-8 w-8 rounded-lg after:border-0 bg-sidebar-primary">
-                  {avatar ? (
+                  {avatarSrc ? (
                     <AvatarImage
-                      src={avatar}
-                      alt={configuration?.display_name}
+                      src={avatarSrc}
+                      alt={settings?.display_name}
                       className="rounded-lg"
                     />
                   ) : (
@@ -70,10 +70,12 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {configuration?.display_name}
+                    {settings?.display_name}
                   </span>
                   <span className="truncate text-xs">
-                    {configuration?.username}@{configuration?.hostname}
+                    {settings
+                      ? `${settings.username}@${settings.hostname}`
+                      : ""}
                   </span>
                 </div>
                 <HugeiconsIcon icon={Settings01Icon} />

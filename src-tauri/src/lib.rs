@@ -1,3 +1,4 @@
+use std::fs;
 use std::sync::Arc;
 
 use tauri::image::Image;
@@ -71,6 +72,10 @@ pub fn run() {
             // Settings
             get_theme_settings,
             get_user_config,
+            update_user_profile_picture,
+            select_user_profile_picture,
+            clear_user_profile_picture,
+            update_user_display_name,
         ])
         .register_asynchronous_uri_scheme_protocol("avatars", avatars::avatars_protocol_handler)
         .setup(|app| {
@@ -94,6 +99,11 @@ pub fn run() {
                 .and_then(|v| v.as_str().map(|s| s.to_string()))
                 .unwrap_or_else(|| whoami::realname().unwrap_or("Warpinator".to_string()));
 
+            let profile_picture = store.get("profile-picture").and_then(|v| {
+                fs::read(handle.path().app_data_dir().ok()?.to_path_buf().join(v.as_str().unwrap()))
+                    .ok()
+            });
+
             let username = whoami::username().unwrap_or_else(|_| "warpinator".to_string());
             let hostname = whoami::hostname().unwrap_or_else(|_| "warpinator".to_string());
 
@@ -109,14 +119,19 @@ pub fn run() {
                     s_uuid
                 });
 
-            let user_config = UserConfig::builder()
+            let mut user_config_builder = UserConfig::builder()
                 .default_bind_addr_v4()
                 .default_bind_addr_v6()
                 .hostname(&hostname)
                 .username(&username)
                 .display_name(&display_name)
-                .group_code(&group_code)
-                .build();
+                .group_code(&group_code);
+
+            if let Some(picture) = profile_picture {
+                user_config_builder = user_config_builder.picture(&*picture);
+            }
+
+            let user_config = user_config_builder.build();
 
             let server = WarpinatorServer::builder()
                 .user_config(user_config.clone())
