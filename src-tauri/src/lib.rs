@@ -63,6 +63,11 @@ pub fn run() {
             // Transfers
             new_transfer,
             get_transfers,
+            accept_transfer,
+            cancel_transfer,
+            stop_transfer,
+            remove_transfer,
+            open_transfer,
             // Settings
             get_theme_settings,
             get_user_config,

@@ -7,6 +7,7 @@ import {
   FolderOpenIcon,
   MoreVerticalIcon,
   Remove01Icon,
+  StopIcon,
   Tick02Icon,
   Upload01Icon,
 } from "@hugeicons/core-free-icons";
@@ -27,6 +28,13 @@ import {
   Collapsible,
   CollapsibleContent,
 } from "@/components/ui/collapsible.tsx";
+import {
+  acceptTransfer,
+  cancelTransfer,
+  openTransfer,
+  removeTransfer,
+  stopTransfer,
+} from "@/lib/transfers.ts";
 
 export function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -64,12 +72,11 @@ export function formatState(state: TransferState): string {
 
 export function TransferButtons({ transfer }: { transfer: Transfer }) {
   const incoming = "Incoming" in transfer.kind;
-  const outgoing = "Outgoing" in transfer.kind;
+  // const outgoing = "Outgoing" in transfer.kind;
 
-  const canAcceptDecline = transfer.state == "waiting_permission" && incoming;
-  const canCancel =
-    (transfer.state == "waiting_permission" && outgoing) ||
-    transfer.state == "in_progress";
+  const canAccept = transfer.state == "waiting_permission" && incoming;
+  const canCancel = transfer.state == "waiting_permission";
+  const canStop = transfer.state == "in_progress";
   const canOpen = transfer.state == "completed" && incoming;
   const canRemove =
     transfer.state == "completed" ||
@@ -81,34 +88,54 @@ export function TransferButtons({ transfer }: { transfer: Transfer }) {
   return (
     <>
       <ButtonGroup>
-        {canAcceptDecline ? (
-          <>
-            <Button size="icon-sm" variant="default">
-              <HugeiconsIcon icon={Tick02Icon} />
-            </Button>
-            <Button size="icon-sm" variant="destructive">
-              <HugeiconsIcon icon={Cancel01Icon} />
-            </Button>
-          </>
+        {canAccept ? (
+          <Button
+            size="icon-sm"
+            variant="default"
+            onClick={() => acceptTransfer(transfer)}
+          >
+            <HugeiconsIcon icon={Tick02Icon} />
+          </Button>
         ) : undefined}
         {canCancel ? (
-          <Button size="icon-sm" variant="destructive">
+          <Button
+            size="icon-sm"
+            variant="destructive"
+            onClick={() => cancelTransfer(transfer)}
+          >
             <HugeiconsIcon icon={Cancel01Icon} />
           </Button>
         ) : undefined}
+        {canStop ? (
+          <Button
+            size="icon-sm"
+            variant="destructive"
+            onClick={() => stopTransfer(transfer)}
+          >
+            <HugeiconsIcon icon={StopIcon} />
+          </Button>
+        ) : undefined}
         {canOpen ? (
-          <Button size="icon-sm" variant="secondary">
+          <Button
+            size="icon-sm"
+            variant="secondary"
+            onClick={() => openTransfer(transfer)}
+          >
             <HugeiconsIcon icon={FolderOpenIcon} />
           </Button>
         ) : undefined}
         {canRemove ? (
-          <Button size="icon-sm" variant="secondary">
+          <Button
+            size="icon-sm"
+            variant="secondary"
+            onClick={() => removeTransfer(transfer)}
+          >
             <HugeiconsIcon icon={Remove01Icon} />
           </Button>
         ) : undefined}
       </ButtonGroup>
 
-      {canAcceptDecline ? (
+      {canAccept ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button size="icon-sm" variant="secondary" className="-ml-2">
@@ -160,10 +187,18 @@ export function TransferCard({ transfer }: { transfer: Transfer }) {
           <HugeiconsIcon icon={Download01Icon} className="size-4" />
         )}
         <div className="flex-1 min-w-0">
-          <div className="text-sm truncate">
-            <span className="me-1">{transfer.entry_names.join(", ")}</span>{" "}
-            <Badge variant="secondary">{transfer.file_count} files</Badge>{" "}
-            <Badge variant="outline">{formatBytes(transfer.total_bytes)}</Badge>
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="text-sm truncate min-w-0">
+              {transfer.entry_names.join(", ")}
+            </span>
+            {transfer.file_count > 1 ? (
+              <Badge variant="secondary" className="shrink-0">
+                {transfer.file_count} files
+              </Badge>
+            ) : null}
+            <Badge variant="outline" className="shrink-0">
+              {formatBytes(transfer.total_bytes)}
+            </Badge>
           </div>
           <div className="text-xs truncate text-muted-foreground">
             {formatState(transfer.state)}

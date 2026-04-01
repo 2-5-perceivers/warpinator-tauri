@@ -28,7 +28,11 @@ export function useTransfers(remoteUuid: string | null) {
 
     const unlisten = listen<WarpEvent>("warp-event", async (event) => {
       const ev = event.payload;
-      if ("TransferAdded" in ev || "TransferUpdated" in ev) {
+      if (
+        "TransferAdded" in ev ||
+        "TransferUpdated" in ev ||
+        "TransferRemoved" in ev
+      ) {
         await fetchTransfers();
       }
     });
