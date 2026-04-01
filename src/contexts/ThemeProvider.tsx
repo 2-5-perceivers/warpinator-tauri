@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { load } from "@tauri-apps/plugin-store";
-import { warpinator_init } from "@/types/warp-init";
+import { initialTheme } from "@/lib/theme.ts";
 
 const store = await load("settings.json", {
   defaults: { theme: "system" },
@@ -28,7 +28,7 @@ const initialState: ThemeProviderState = {
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme>(warpinator_init.theme);
+  const [theme, setThemeState] = useState<Theme>(initialTheme.theme);
 
   useEffect(() => {
     const root = window.document.documentElement;

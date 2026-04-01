@@ -22,16 +22,17 @@ import {
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
 import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
 import { exit } from "@tauri-apps/plugin-process";
-import { warpinator_init } from "@/types/warp-init.ts";
+import { Configuration, getConfiguration } from "@/lib/configuration.ts";
 
 export function SidebarUser({ avatar }: { avatar?: string }) {
   const { isMobile } = useSidebar();
   const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
   const [isSettingsDialogOpen, setSettingsDialogOpen] = React.useState(false);
+  const [configuration, setConfiguration] = React.useState<Configuration>();
 
   const quitApp = () => {
     exit(0).catch(() => {
@@ -39,7 +40,10 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
     });
   };
 
-  const init = warpinator_init;
+  useEffect(() => {
+    // Fetch the configuration when the component mounts
+    getConfiguration().then(setConfiguration);
+  }, []);
 
   return (
     <>
@@ -55,7 +59,7 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
                   {avatar ? (
                     <AvatarImage
                       src={avatar}
-                      alt={init.display_name}
+                      alt={configuration?.display_name}
                       className="rounded-lg"
                     />
                   ) : (
@@ -66,10 +70,10 @@ export function SidebarUser({ avatar }: { avatar?: string }) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {init.display_name}
+                    {configuration?.display_name}
                   </span>
                   <span className="truncate text-xs">
-                    {init.username}@{init.hostname}
+                    {configuration?.username}@{configuration?.hostname}
                   </span>
                 </div>
                 <HugeiconsIcon icon={Settings01Icon} />

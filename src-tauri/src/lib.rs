@@ -10,6 +10,7 @@ use warpinator_lib::WarpinatorServer;
 use warpinator_lib::config::user::UserConfig;
 
 use crate::commands::remotes::*;
+use crate::commands::settings::*;
 use crate::commands::transfers::*;
 
 #[macro_use]
@@ -54,10 +55,14 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(tauri::generate_handler![
+            // Remotes
             get_remote,
             get_remotes,
             new_transfer,
             get_transfers,
+            // Settings
+            get_theme_settings,
+            get_user_config,
         ])
         .setup(|app| {
             let handle = app.handle().clone();
@@ -104,10 +109,8 @@ pub fn run() {
                 .group_code(&group_code)
                 .build();
 
-            let ip_addr = user_config.bind_addr_v4.map(|ip| ip.to_string()).unwrap_or_default();
-
             let server = WarpinatorServer::builder()
-                .user_config(user_config)
+                .user_config(user_config.clone())
                 .service_name(&service_id)
                 .build()
                 .expect("failed to build server");
@@ -116,9 +119,11 @@ pub fn run() {
             let mut warp_events = server.remotes.subscribe();
             let (shutdown_tx, shutdown_rx) = oneshot::channel::<()>();
 
-            // store what you need to reach from commands
-            handle.manage(remote_manager);
             handle.manage(Arc::new(shutdown_tx));
+            handle.manage(remote_manager);
+            handle.manage(user_config);
+            handle.manage(ThemeSettings { theme });
+
             let event_handle = handle.clone();
 
             tauri::async_runtime::spawn(async move {
@@ -140,18 +145,6 @@ pub fn run() {
             tauri::async_runtime::spawn_blocking(move || {
                 let _ = spawn_tray(&handle);
             });
-
-            let window = app.get_webview_window("main").unwrap();
-            window.eval(&format!(
-                "window.__WARPINATOR_INIT__ = {};",
-                serde_json::json!({
-                    "theme": theme,
-                    "display_name": display_name,
-                    "hostname": hostname,
-                    "username": username,
-                    "ip": ip_addr,
-                })
-            ))?;
 
             Ok(())
         })
