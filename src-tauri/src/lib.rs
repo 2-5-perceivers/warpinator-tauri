@@ -59,6 +59,8 @@ pub fn run() {
             // Remotes
             get_remote,
             get_remotes,
+            connect_remote,
+            // Transfers
             new_transfer,
             get_transfers,
             // Settings

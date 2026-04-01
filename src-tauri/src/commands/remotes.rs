@@ -52,3 +52,12 @@ pub async fn get_remote(
 pub async fn get_remotes(remotes: State<'_, RemoteManager>) -> Result<Vec<RemoteUi>, String> {
     Ok(remotes.remotes().await.into_iter().map(|r| r.into()).collect())
 }
+
+#[tauri::command]
+pub async fn connect_remote(
+    remotes: State<'_, RemoteManager>,
+    remote_uuid: String,
+) -> Result<(), String> {
+    let remote = remotes.get_worker(remote_uuid.as_str()).await.ok_or("No remote found")?;
+    remote.connect().await.map_err(|e| e.to_string())
+}

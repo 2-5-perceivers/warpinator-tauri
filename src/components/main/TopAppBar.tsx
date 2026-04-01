@@ -10,11 +10,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowDataTransferHorizontalIcon,
   AtIcon,
+  ConnectIcon,
   Copy01Icon,
   FolderAttachmentIcon,
   HeartAddIcon,
   Message01Icon,
-  UserAccountIcon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -86,6 +86,12 @@ export function TopBar({ os }: { os: string }) {
       await invoke("new_transfer", {
         remoteUuid: selectedRemoteUuid,
         sendFolders,
+      });
+    };
+
+    const connectRemote = async () => {
+      await invoke("connect_remote", {
+        remoteUuid: selectedRemoteUuid,
       });
     };
 
@@ -191,22 +197,41 @@ export function TopBar({ os }: { os: string }) {
           </TooltipTrigger>
           <TooltipContent>Send message</TooltipContent>
         </Tooltip>
-        <ButtonGroup>
+        {remote.state.type == "error" || remote.state.type == "disconnected" ? (
           <Button
             className="pointer-events-auto"
             size="sm"
-            onClick={() => newTransfer(false)}
+            variant="outline"
+            onClick={() => connectRemote()}
           >
-            Send
+            <HugeiconsIcon icon={ConnectIcon} />
+            Connect
           </Button>
-          <Button
-            className="pointer-events-auto"
-            size="icon-sm"
-            onClick={() => newTransfer(true)}
-          >
-            <HugeiconsIcon icon={FolderAttachmentIcon} />
-          </Button>
-        </ButtonGroup>
+        ) : (
+          <ButtonGroup>
+            <Button
+              className="pointer-events-auto"
+              size="sm"
+              onClick={() => newTransfer(false)}
+              disabled={remote.state.type !== "connected"}
+            >
+              Send
+            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="pointer-events-auto"
+                  size="icon-sm"
+                  onClick={() => newTransfer(true)}
+                  disabled={remote.state.type !== "connected"}
+                >
+                  <HugeiconsIcon icon={FolderAttachmentIcon} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Send folders</TooltipContent>
+            </Tooltip>
+          </ButtonGroup>
+        )}
       </div>
     );
   }
