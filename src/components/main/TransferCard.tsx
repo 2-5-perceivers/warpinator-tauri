@@ -35,6 +35,8 @@ import {
   removeTransfer,
   stopTransfer,
 } from "@/lib/transfers.ts";
+import { useSettings } from "@/contexts/SettingsProvider.tsx";
+import { open as openDialog } from "@tauri-apps/plugin-dialog";
 
 export function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -72,7 +74,8 @@ export function formatState(state: TransferState): string {
 
 export function TransferButtons({ transfer }: { transfer: Transfer }) {
   const incoming = "Incoming" in transfer.kind;
-  // const outgoing = "Outgoing" in transfer.kind;
+
+  const defaultLocation = useSettings().settings?.defaultDestination;
 
   const canAccept = transfer.state == "waiting_permission" && incoming;
   const canCancel = transfer.state == "waiting_permission";
@@ -92,7 +95,11 @@ export function TransferButtons({ transfer }: { transfer: Transfer }) {
           <Button
             size="icon-sm"
             variant="default"
-            onClick={() => acceptTransfer(transfer)}
+            onClick={async () => {
+              if (defaultLocation)
+                await acceptTransfer(transfer, defaultLocation);
+            }}
+            disabled={!defaultLocation}
           >
             <HugeiconsIcon icon={Tick02Icon} />
           </Button>
@@ -144,7 +151,15 @@ export function TransferButtons({ transfer }: { transfer: Transfer }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={() => {
+                  openDialog({ directory: true, multiple: false }).then(
+                    async (path) => {
+                      if (path) await acceptTransfer(transfer, path);
+                    },
+                  );
+                }}
+              >
                 <HugeiconsIcon icon={Folder01Icon} />
                 Accept to…
               </DropdownMenuItem>

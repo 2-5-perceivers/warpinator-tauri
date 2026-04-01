@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use tauri::{Manager, State};
 use tauri_plugin_dialog::DialogExt;
@@ -51,10 +51,11 @@ pub async fn accept_transfer(
     remotes: State<'_, RemoteManager>,
     remote_uuid: String,
     transfer_uuid: String,
+    destination: &Path,
 ) -> Result<(), String> {
+    tokio::fs::create_dir_all(destination).await.map_err(|e| e.to_string())?;
     let remote = remotes.get_worker(remote_uuid.as_str()).await.ok_or("No remote found")?;
-    remote.accept_transfer(transfer_uuid.as_str(), "/tmp").await.map_err(|e| e.to_string())
-    // TODO: replace the tmp folder with an argument
+    remote.accept_transfer(transfer_uuid.as_str(), destination).await.map_err(|e| e.to_string())
 }
 
 #[tauri::command]

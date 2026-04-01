@@ -2,10 +2,11 @@ import { Transfer } from "@/types/transfer.ts";
 import { invoke } from "@tauri-apps/api/core";
 
 // Accept a transfer in Waiting for permission state
-export async function acceptTransfer(transfer: Transfer) {
+export async function acceptTransfer(transfer: Transfer, destination: string) {
   await invoke("accept_transfer", {
     remoteUuid: transfer.remote_uuid,
     transferUuid: transfer.uuid,
+    destination,
   });
 }
 
