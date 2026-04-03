@@ -7,6 +7,7 @@ import { WarpinatorMain } from "@/components/main/WarpinatorMain.tsx";
 import { RemoteProvider } from "@/contexts/RemoteContext.tsx";
 import { ThemeProvider } from "@/contexts/ThemeProvider.tsx";
 import { SettingsProvider } from "@/contexts/SettingsProvider.tsx";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   const os = platform();
@@ -21,6 +22,7 @@ function App() {
             <RemoteProvider>
               <WarpinatorSidebar os={os} />
               <WarpinatorMain os={os} />
+              <Toaster position="bottom-center" />
             </RemoteProvider>
           </SidebarProvider>
         </TooltipProvider>

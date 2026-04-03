@@ -46,6 +46,7 @@ fn spawn_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
             let window = app.get_webview_window("main").expect("no main window");
             let _ = window.show();

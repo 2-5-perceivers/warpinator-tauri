@@ -36,6 +36,8 @@ import {
   ItemTitle,
 } from "@/components/ui/item.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
+import { toast } from "sonner";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 export function TopBar({ os }: { os: string }) {
   const { selectedRemoteUuid } = useRemoteContext();
@@ -160,7 +162,16 @@ export function TopBar({ os }: { os: string }) {
                 <ItemDescription>{remote.ip}</ItemDescription>
               </ItemContent>
               <ItemActions>
-                <Button size="icon-xs" variant="secondary">
+                <Button
+                  size="icon-xs"
+                  variant="secondary"
+                  onClick={() =>
+                    toast.promise(() => writeText(remote.ip), {
+                      success: "Address copied to clipboard",
+                      error: "Failed to copy address",
+                    })
+                  }
+                >
                   <HugeiconsIcon icon={Copy01Icon} />
                 </Button>
               </ItemActions>
