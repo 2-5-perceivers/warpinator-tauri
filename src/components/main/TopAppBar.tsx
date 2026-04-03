@@ -36,6 +36,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
+import { useSidebar } from "@/components/ui/sidebar.tsx";
 import { toast } from "sonner";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 
@@ -44,6 +45,8 @@ export function TopBar({ os }: { os: string }) {
 
   let children;
   const remote = useRemote(selectedRemoteUuid);
+  const { toggleSidebar } = useSidebar();
+
   if (remote) {
     const getBadgeVariant = () => {
       switch (remote.state.type) {
@@ -202,11 +205,12 @@ export function TopBar({ os }: { os: string }) {
               className="pointer-events-auto"
               size="icon-sm"
               variant="outline"
+              onClick={toggleSidebar}
             >
               <HugeiconsIcon icon={Message01Icon} />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Send message</TooltipContent>
+          <TooltipContent>Messages</TooltipContent>
         </Tooltip>
         {remote.state.type == "error" || remote.state.type == "disconnected" ? (
           <Button

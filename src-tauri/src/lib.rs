@@ -10,6 +10,7 @@ use tokio::sync::oneshot;
 use warpinator_lib::WarpinatorServer;
 use warpinator_lib::config::user::UserConfig;
 
+use crate::commands::messages::*;
 use crate::commands::remotes::*;
 use crate::commands::settings::*;
 use crate::commands::transfers::*;
@@ -70,6 +71,10 @@ pub fn run() {
             stop_transfer,
             remove_transfer,
             open_transfer,
+            // Messages
+            send_message,
+            get_messages,
+            remove_message,
             // Settings
             get_theme_settings,
             get_user_config,
