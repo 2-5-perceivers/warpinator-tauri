@@ -5,6 +5,7 @@ use tauri::image::Image;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{AppHandle, Emitter, Manager};
+use tauri_plugin_notification::NotificationExt;
 use tauri_plugin_store::StoreExt;
 use tokio::sync::oneshot;
 use warpinator_lib::WarpinatorServer;
@@ -14,10 +15,12 @@ use crate::commands::messages::*;
 use crate::commands::remotes::*;
 use crate::commands::settings::*;
 use crate::commands::transfers::*;
+use crate::events::HandleEvent;
 
 #[macro_use]
 mod commands;
 mod avatars;
+mod events;
 
 fn spawn_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
     let icon = include_bytes!("../icons/symbolic.png");
@@ -47,12 +50,13 @@ fn spawn_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
             let window = app.get_webview_window("main").expect("no main window");
             let _ = window.show();
             let _ = window.set_focus();
         }))
+        .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_store::Builder::new().build())
@@ -154,13 +158,26 @@ pub fn run() {
             handle.manage(user_config);
             handle.manage(ThemeSettings { theme });
 
-            let event_handle = handle.clone();
+            let service_app_handle = handle.clone();
 
             tauri::async_runtime::spawn(async move {
-                // forward lib events to frontend
+                let remote_manager = server.remotes.clone();
+                // Handle events
                 tokio::spawn(async move {
+                    let store = service_app_handle.store("settings.json").unwrap();
+                    let path = service_app_handle.path();
+                    let notification_ext = service_app_handle.notification();
+
                     while let Ok(ev) = warp_events.recv().await {
-                        let _ = event_handle.emit("warp-event", &ev);
+                        let _ = service_app_handle.emit("warp-event", &ev);
+                        let auto_accepted =
+                            ev.try_auto_accept(store.as_ref(), path, &remote_manager).await;
+
+                        if let Ok(false) = auto_accepted {
+                            let _ = ev
+                                .try_notify(store.as_ref(), &notification_ext, &remote_manager)
+                                .await;
+                        }
                     }
                 });
 
