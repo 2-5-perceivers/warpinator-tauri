@@ -21,9 +21,25 @@ pub struct Configuration {
     pub display_name: String,
 }
 
+#[derive(Serialize, Clone)]
+pub struct RegistrationInfo {
+    pub ip: String,
+    pub port: u16,
+}
+
 #[tauri::command]
 pub fn get_theme_settings(settings: State<'_, ThemeSettings>) -> ThemeSettings {
     settings.inner().clone()
+}
+
+#[tauri::command]
+pub async fn get_registration_info(
+    config: State<'_, UserConfig>,
+) -> Result<RegistrationInfo, String> {
+    Ok(RegistrationInfo {
+        ip: config.bind_addr_v4.map(|a| a.to_string()).ok_or("IPv4 bind address not found")?,
+        port: config.reg_port,
+    })
 }
 
 #[tauri::command]

@@ -67,6 +67,7 @@ pub fn run() {
             get_remote,
             get_remotes,
             connect_remote,
+            manual_connect_remote,
             // Transfers
             new_transfer,
             get_transfers,
@@ -81,6 +82,7 @@ pub fn run() {
             remove_message,
             // Settings
             get_theme_settings,
+            get_registration_info,
             get_user_config,
             update_user_profile_picture,
             select_user_profile_picture,

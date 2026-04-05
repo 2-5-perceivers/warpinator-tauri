@@ -6040,7 +6040,7 @@ dependencies = [
 [[package]]
 name = "warpinator-lib"
 version = "0.1.0"
-source = "git+https://github.com/2-5-perceivers/warpinator-lib.git#53b811611c40ae459efbcbe78b0d941b8e0a6d42"
+source = "git+https://github.com/2-5-perceivers/warpinator-lib.git#c8e319e6352273c14b094d57987c476a20ebab67"
 dependencies = [
  "async-walkdir",
  "base64 0.22.1",

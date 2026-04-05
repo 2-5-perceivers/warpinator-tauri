@@ -22,16 +22,20 @@ import {
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import React from "react";
+import { useMemo, useState } from "react";
 import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
 import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
 import { exit } from "@tauri-apps/plugin-process";
 import { useSettings } from "@/contexts/SettingsProvider.tsx";
 
-export function SidebarUser() {
+export function SidebarUser({
+  setManualConnectionDialogOpen,
+}: {
+  setManualConnectionDialogOpen: (open: boolean) => void;
+}) {
   const { isMobile } = useSidebar();
-  const [isAboutDialogOpen, setAboutDialogOpen] = React.useState(false);
-  const [isSettingsDialogOpen, setSettingsDialogOpen] = React.useState(false);
+  const [isAboutDialogOpen, setAboutDialogOpen] = useState(false);
+  const [isSettingsDialogOpen, setSettingsDialogOpen] = useState(false);
   const { settings } = useSettings();
 
   const quitApp = () => {
@@ -40,7 +44,7 @@ export function SidebarUser() {
     });
   };
 
-  const avatarSrc = React.useMemo(() => {
+  const avatarSrc = useMemo(() => {
     if (settings) return `avatars://self?v=${settings.avatarVersion}`;
     return undefined;
   }, [settings?.avatarVersion]);
@@ -87,7 +91,9 @@ export function SidebarUser() {
               sideOffset={4}
             >
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() => setManualConnectionDialogOpen(true)}
+                >
                   <HugeiconsIcon icon={Link01Icon} />
                   Manual connection
                 </DropdownMenuItem>

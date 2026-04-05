@@ -10,7 +10,11 @@ import {
 } from "@/components/ui/empty.tsx";
 import { Button } from "@/components/ui/button.tsx";
 
-export function SidebarEmpty() {
+export function SidebarEmpty({
+  setManualConnectionDialogOpen,
+}: {
+  setManualConnectionDialogOpen: (open: boolean) => void;
+}) {
   return (
     <Empty>
       <EmptyHeader>
@@ -23,7 +27,10 @@ export function SidebarEmpty() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button variant="outline">
+        <Button
+          variant="outline"
+          onClick={() => setManualConnectionDialogOpen(true)}
+        >
           <HugeiconsIcon icon={Link01Icon} />
           Manual connection
         </Button>

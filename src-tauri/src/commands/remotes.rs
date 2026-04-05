@@ -2,7 +2,7 @@ use std::net::IpAddr;
 
 use serde::Serialize;
 use tauri::State;
-use warpinator_lib::remote_manager::RemoteManager;
+use warpinator_lib::remote_manager::{ManualConnectionError, RemoteManager};
 use warpinator_lib::types::remote::{Remote, RemoteState};
 
 #[derive(Serialize, Clone, Debug)]
@@ -60,4 +60,12 @@ pub async fn connect_remote(
 ) -> Result<(), String> {
     let remote = remotes.get_worker(remote_uuid.as_str()).await.ok_or("No remote found")?;
     remote.connect().await.map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub async fn manual_connect_remote(
+    remotes: State<'_, RemoteManager>,
+    remote_url: String,
+) -> Result<(), ManualConnectionError> {
+    remotes.manual_connection(remote_url.as_str()).await
 }
