@@ -100,7 +100,7 @@ export function SidebarUser({
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem disabled>
                   <HugeiconsIcon icon={ArrowReloadHorizontalIcon} />
                   Restart
                 </DropdownMenuItem>
