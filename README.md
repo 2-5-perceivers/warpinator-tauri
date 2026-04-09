@@ -1,4 +1,4 @@
-# Warpinator Tauri
+# [Warpinator Tauri](https://2-5-perceivers.github.io/#/warpinator)
 
 A fast and secure Warpinator client built with Rust and Tauri.
 
@@ -6,9 +6,9 @@ A fast and secure Warpinator client built with Rust and Tauri.
 
 ## Tech Stack
 
-* **Framework:** Tauri (Rust)
-* **Frontend:** React, TypeScript, npm
-* **UI Components:** shadcn/ui
+- **Framework:** Tauri (Rust)
+- **Frontend:** React, TypeScript, npm
+- **UI Components:** shadcn/ui
 
 ## Core Library
 
@@ -30,4 +30,4 @@ Once the project reaches maturity, the goal is to distribute the application thr
 
 ## Contributions
 
-Contributions are welcome. Feel free to open an issue to report bugs or request features, or submit a pull request with your changes.
+Contributions are welcome. Feel free to open an issue to report bugs, request features, or submit a pull request with your changes.
