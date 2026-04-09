@@ -3,5 +3,6 @@
 
 fn main() {
     tracing_subscriber::fmt::init();
+    tracing::info!("Starting Warpinator");
     warpinator_tauri_lib::run()
 }
