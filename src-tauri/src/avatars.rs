@@ -25,12 +25,20 @@ pub fn avatars_protocol_handler<'a, R: Runtime>(
             }
         } else {
             let remote = remote_manger.remote(remote_uuid.as_str()).await;
-            response = match remote {
-                Some(remote) if remote.picture.is_some() => Response::builder()
+
+            let picture = match remote {
+                Some(remote) if remote.picture.is_some() => {
+                    Some(remote.picture.unwrap().read().await.clone())
+                }
+                _ => None,
+            };
+
+            response = match picture {
+                Some(picture) => Response::builder()
                     .header(header::CONTENT_TYPE, "image/png")
-                    .body(remote.picture.unwrap())
+                    .body(picture)
                     .unwrap(),
-                _ => Response::builder().status(404).body(Vec::new()).unwrap(),
+                None => Response::builder().status(404).body(Vec::new()).unwrap(),
             };
         }
 

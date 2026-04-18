@@ -32,7 +32,9 @@ impl From<Remote> for RemoteUi {
             display_name: remote.display_name,
             username: remote.username,
             hostname: remote.hostname,
-            picture: remote.picture.map(|_| format!("avatars://{}", remote.uuid)),
+            picture: remote
+                .picture
+                .map(|_| format!("avatars://{}?v={}", remote.uuid, remote.picture_version)),
             state: remote.state,
             service_static: remote.service_static,
             service_available: remote.service_available,
