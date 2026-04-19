@@ -205,6 +205,7 @@ export function TopBar({ os }: { os: string }) {
               className="pointer-events-auto"
               size="icon-sm"
               variant="outline"
+              disabled={!remote.message_support}
               onClick={toggleSidebar}
             >
               <HugeiconsIcon icon={Message01Icon} />

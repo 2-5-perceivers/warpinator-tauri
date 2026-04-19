@@ -25,4 +25,5 @@ export interface Remote {
   state: RemoteState;
   service_static: boolean;
   service_available: boolean;
+  message_support: boolean;
 }

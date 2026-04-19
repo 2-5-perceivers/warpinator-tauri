@@ -2,6 +2,7 @@ use std::net::IpAddr;
 
 use serde::Serialize;
 use tauri::State;
+use warpinator_lib::config::features::ProtocolFeatures;
 use warpinator_lib::remote_manager::{ManualConnectionError, RemoteManager};
 use warpinator_lib::types::remote::{Remote, RemoteState};
 
@@ -19,6 +20,7 @@ pub struct RemoteUi {
     pub state: RemoteState,
     pub service_static: bool,
     pub service_available: bool,
+    pub message_support: bool,
 }
 
 impl From<Remote> for RemoteUi {
@@ -38,6 +40,7 @@ impl From<Remote> for RemoteUi {
             state: remote.state,
             service_static: remote.service_static,
             service_available: remote.service_available,
+            message_support: remote.features.contains(ProtocolFeatures::MESSAGE_SUPPORT),
         }
     }
 }
