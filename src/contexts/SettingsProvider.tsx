@@ -18,6 +18,7 @@ type Settings = Configuration & {
   notificationsMessages: boolean;
   overwrite: boolean;
   autoAccept: AutoAcceptOption;
+  favorites: string[];
   portTransfers: string;
   portRegistration: string;
   avatarVersion: number;
@@ -33,6 +34,8 @@ type SettingsContextValue = {
   setNotificationsMessages: (enabled: boolean) => Promise<void>;
   setOverwrite: (enabled: boolean) => Promise<void>;
   setAutoAccept: (value: AutoAcceptOption) => Promise<void>;
+  toggleFavorite: (remoteUuid: string) => Promise<void>;
+  isFavorite: (remoteUuid: string) => boolean;
   setPortTransfers: (port: string) => Promise<void>;
   setPortRegistration: (port: string) => Promise<void>;
   bumpAvatarVersion: () => void;
@@ -50,6 +53,15 @@ const SettingsContext = createContext<SettingsContextValue | undefined>(
 async function readSetting<T>(key: string, fallback: T): Promise<T> {
   const value = await settingsStore.get<T>(key);
   return (value as T | undefined) ?? fallback;
+}
+
+function normalizeFavorites(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return [
+    ...new Set(
+      value.filter((item): item is string => typeof item === "string"),
+    ),
+  ];
 }
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
@@ -87,6 +99,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
           autoAccept: await readSetting<AutoAcceptOption>(
             "auto-accept",
             "none",
+          ),
+          favorites: normalizeFavorites(
+            await readSetting<unknown>("favorites", []),
           ),
           portTransfers: await readSetting("port-transfers", "42000"),
           portRegistration: await readSetting("port-registration", "42001"),
@@ -187,6 +202,22 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
           autoAccept: value,
         }));
       },
+      toggleFavorite: async (remoteUuid: string) => {
+        const value = remoteUuid.trim();
+        if (!value) return;
+
+        const nextFavorites = settings?.favorites.includes(value)
+          ? settings.favorites.filter((uuid) => uuid !== value)
+          : [...(settings?.favorites ?? []), value];
+
+        const normalizedFavorites = normalizeFavorites(nextFavorites);
+        await settingsStore.set("favorites", normalizedFavorites);
+        setSettings((prev) =>
+          prev ? { ...prev, favorites: normalizedFavorites } : prev,
+        );
+      },
+      isFavorite: (remoteUuid: string) =>
+        settings?.favorites.includes(remoteUuid) ?? false,
       setPortTransfers: async (port: string) => {
         await persist("port-transfers", port, (prev) => ({
           ...prev,

@@ -14,6 +14,7 @@ import {
   Copy01Icon,
   FolderAttachmentIcon,
   HeartAddIcon,
+  HeartMinusIcon,
   Message01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
@@ -39,6 +40,7 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { useSidebar } from "@/components/ui/sidebar.tsx";
 import { toast } from "sonner";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { useSettings } from "@/contexts/SettingsProvider.tsx";
 
 export function TopBar({ os }: { os: string }) {
   const { selectedRemoteUuid } = useRemoteContext();
@@ -46,6 +48,7 @@ export function TopBar({ os }: { os: string }) {
   let children;
   const remote = useRemote(selectedRemoteUuid);
   const { toggleSidebar } = useSidebar();
+  const { isFavorite, toggleFavorite } = useSettings();
 
   if (remote) {
     const getBadgeVariant = () => {
@@ -193,8 +196,11 @@ export function TopBar({ os }: { os: string }) {
               className="pointer-events-auto ml-auto"
               size="icon-sm"
               variant="outline"
+              onClick={() => toggleFavorite(remote.uuid)}
             >
-              <HugeiconsIcon icon={HeartAddIcon} />
+              <HugeiconsIcon
+                icon={isFavorite(remote.uuid) ? HeartMinusIcon : HeartAddIcon}
+              />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Toggle favourites</TooltipContent>

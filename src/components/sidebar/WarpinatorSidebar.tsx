@@ -15,11 +15,13 @@ import React, { useState } from "react";
 import { SidebarSearchEmpty } from "@/components/sidebar/SidebarSearchEmpty.tsx";
 import { useRemoteContext } from "@/contexts/RemoteContext.tsx";
 import { ManualConnectionDialog } from "@/dialogs/ManualConnectionDialog.tsx";
+import { useSettings } from "@/contexts/SettingsProvider.tsx";
 
 export function WarpinatorSidebar({ os }: { os: string }) {
   const remotes = useRemotes();
   const [search, setSearch] = React.useState("");
   const { selectedRemoteUuid, setSelectedRemote } = useRemoteContext();
+  const { settings } = useSettings();
 
   const [isManualConnectionDialogOpen, setManualConnectionDialogOpen] =
     useState(false);
@@ -41,6 +43,18 @@ export function WarpinatorSidebar({ os }: { os: string }) {
       return remoteName.includes(query) || remoteAddress.includes(query);
     });
   }, [remotes, search]);
+
+  const sortedRemotes = React.useMemo(() => {
+    const favorites = new Set(settings?.favorites ?? []);
+
+    return [...filteredRemotes].sort((a, b) => {
+      const aFavorite = favorites.has(a.uuid);
+      const bFavorite = favorites.has(b.uuid);
+
+      if (aFavorite === bFavorite) return 0;
+      return aFavorite ? -1 : 1;
+    });
+  }, [filteredRemotes, settings?.favorites]);
 
   return (
     <>
@@ -67,11 +81,11 @@ export function WarpinatorSidebar({ os }: { os: string }) {
             <SidebarEmpty
               setManualConnectionDialogOpen={setManualConnectionDialogOpen}
             />
-          ) : filteredRemotes.length == 0 ? (
+          ) : sortedRemotes.length == 0 ? (
             <SidebarSearchEmpty />
           ) : (
             <SidebarMenu>
-              {filteredRemotes.map((remote) => (
+              {sortedRemotes.map((remote) => (
                 <SidebarRemote
                   key={remote.uuid}
                   remote={{
@@ -80,6 +94,9 @@ export function WarpinatorSidebar({ os }: { os: string }) {
                     picture: remote.picture,
                     state: remote.state,
                   }}
+                  isFavorite={
+                    settings?.favorites.includes(remote.uuid) ?? false
+                  }
                   onClick={() => setSelectedRemote(remote.uuid)}
                   isSelected={selectedRemoteUuid === remote.uuid}
                 />
