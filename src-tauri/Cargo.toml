@@ -2,8 +2,10 @@
 name = "warpinator-tauri"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["Rares Vanca"]
+authors = ["2.5 Perceivers", "Rares Vanca"]
 edition = "2024"
+license = "GPL-3"
+homepage = "https://2-5-perceivers.github.io/#/warpinator"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
