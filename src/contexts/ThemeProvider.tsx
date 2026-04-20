@@ -31,6 +31,24 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(initialTheme.theme);
 
   useEffect(() => {
+    let unlisten: (() => void) | undefined;
+
+    const listenTheme = async () => {
+      unlisten = await store.onKeyChange("ui-theme", (value) => {
+        if (value === "dark" || value === "light" || value === "system") {
+          setThemeState(value);
+        }
+      });
+    };
+
+    listenTheme();
+
+    return () => {
+      unlisten?.();
+    };
+  }, []);
+
+  useEffect(() => {
     const root = window.document.documentElement;
 
     root.classList.remove("light", "dark");

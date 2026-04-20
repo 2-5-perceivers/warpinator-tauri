@@ -22,6 +22,36 @@
         "transparent": true,
         "shadow": false,
         "resizable": true
+      },
+      {
+        "title": "Settings",
+        "label": "settings",
+        "width": 400,
+        "height": 500,
+        "minWidth": 400,
+        "minHeight": 400,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true,
+        "maximizable": false,
+        "parent": "main",
+        "visible": false
+      },
+      {
+        "title": "About",
+        "label": "about",
+        "width": 400,
+        "height": 500,
+        "minWidth": 400,
+        "minHeight": 400,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true,
+        "maximizable": false,
+        "parent": "main",
+        "visible": false
       }
     ],
     "security": {

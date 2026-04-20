@@ -22,11 +22,10 @@ import {
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
-import { useMemo, useState } from "react";
-import { AboutDialog } from "@/dialogs/AboutDialog.tsx";
-import { SettingsDialog } from "@/dialogs/SettingsDialog.tsx";
+import { useMemo } from "react";
 import { exit } from "@tauri-apps/plugin-process";
 import { useSettings } from "@/contexts/SettingsProvider.tsx";
+import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 export function SidebarUser({
   setManualConnectionDialogOpen,
@@ -34,14 +33,26 @@ export function SidebarUser({
   setManualConnectionDialogOpen: (open: boolean) => void;
 }) {
   const { isMobile } = useSidebar();
-  const [isAboutDialogOpen, setAboutDialogOpen] = useState(false);
-  const [isSettingsDialogOpen, setSettingsDialogOpen] = useState(false);
   const { settings } = useSettings();
 
   const quitApp = () => {
     exit(0).catch(() => {
       console.log("Failed to quit the app");
     });
+  };
+
+  const openSettingsWindow = async () => {
+    const settingsWindow = await WebviewWindow.getByLabel("settings");
+    if (!settingsWindow) return;
+    await settingsWindow.show();
+    await settingsWindow.setFocus();
+  };
+
+  const openAboutWindow = async () => {
+    const about = await WebviewWindow.getByLabel("about");
+    if (!about) return;
+    await about.show();
+    await about.setFocus();
   };
 
   const avatarSrc = useMemo(() => {
@@ -104,11 +115,11 @@ export function SidebarUser({
                   <HugeiconsIcon icon={ArrowReloadHorizontalIcon} />
                   Restart
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setSettingsDialogOpen(true)}>
+                <DropdownMenuItem onSelect={openSettingsWindow}>
                   <HugeiconsIcon icon={Settings01Icon} />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setAboutDialogOpen(true)}>
+                <DropdownMenuItem onSelect={openAboutWindow}>
                   <HugeiconsIcon icon={InformationSquareIcon} />
                   About
                 </DropdownMenuItem>
@@ -122,11 +133,6 @@ export function SidebarUser({
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-      <SettingsDialog
-        open={isSettingsDialogOpen}
-        onOpenChange={setSettingsDialogOpen}
-      />
-      <AboutDialog open={isAboutDialogOpen} onOpenChange={setAboutDialogOpen} />
     </>
   );
 }
