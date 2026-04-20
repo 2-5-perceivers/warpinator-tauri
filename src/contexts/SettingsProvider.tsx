@@ -85,7 +85,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
           ),
           defaultDestination: await readSetting(
             "default-destination",
-            (await path.downloadDir()) + "/Warpinator",
+            await path
+              .downloadDir()
+              .then((dir) => path.join(dir, "Warpinator")),
           ),
           notificationsTransfers: await readSetting(
             "notifications-transfers",
