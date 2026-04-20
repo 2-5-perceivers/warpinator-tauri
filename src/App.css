@@ -136,11 +136,18 @@ body {
   margin: 0;
   height: 100vh;
   max-height: 100vh;
+}
+
+#app-window {
+  @apply bg-background text-foreground select-none;
+}
+
+#app-window.floating {
   border-radius: var(--radius-xl);
   clip-path: inset(0 round var(--radius-xl));
 }
 
-body::after {
+#app-window.floating::after {
   content: "";
   position: absolute;
   top: 0;
@@ -152,10 +159,6 @@ body::after {
   pointer-events: none;
   z-index: 1000;
   @apply border-border;
-}
-
-#root {
-  @apply bg-background text-foreground select-none;
 }
 
 /* Animations */
