@@ -102,7 +102,8 @@ pub async fn open_transfer(
         .await
         .ok_or("No transfer found")?;
     if let Incoming { destination, .. } = transfer.kind {
-        let path = destination.join(transfer.entry_names.get(0).ok_or("Transfer has no entry names")?.as_str());
+        let path = destination
+            .join(transfer.entry_names.get(0).ok_or("Transfer has no entry names")?.as_str());
         app_handle.opener().reveal_item_in_dir(path).map_err(|e| e.to_string())
     } else {
         Err("Can't open an outgoing transfer".to_string())
