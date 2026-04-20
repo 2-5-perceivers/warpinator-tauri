@@ -102,22 +102,8 @@ pub async fn open_transfer(
         .await
         .ok_or("No transfer found")?;
     if let Incoming { destination, .. } = transfer.kind {
-        if transfer.entry_names.len() > 1 {
-            let paths_iter = transfer.entry_names.iter().map(|name| destination.join(name));
-            app_handle.opener().reveal_items_in_dir(paths_iter).map_err(|e| e.to_string())?;
-        } else {
-            let path = destination.join(transfer.entry_names[0].as_str());
-            let metadata = tokio::fs::metadata(&path).await.map_err(|e| e.to_string())?;
-            if metadata.is_dir() {
-                app_handle.opener().reveal_item_in_dir(path).map_err(|e| e.to_string())?;
-            } else {
-                app_handle
-                    .opener()
-                    .open_path(path.to_string_lossy(), None::<&str>)
-                    .map_err(|e| e.to_string())?;
-            }
-        }
-        Ok(())
+        let path = destination.join(transfer.entry_names.get(0).ok_or("Transfer has no entry names")?.as_str());
+        app_handle.opener().reveal_item_in_dir(path).map_err(|e| e.to_string())
     } else {
         Err("Can't open an outgoing transfer".to_string())
     }
