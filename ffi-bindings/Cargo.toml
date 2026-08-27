@@ -1,0 +1,47 @@
+[package]
+name = "warpinator-ffi"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+name = "warpinator"
+
+[[bin]]
+name = "bindgen"
+path = "bin/bindgen.rs"
+
+[[bin]]
+name = "build-android"
+path = "bin/build_android.rs"
+
+[profile.release]
+opt-level = "s"
+panic = "abort"
+codegen-units = 1
+lto = true
+strip = true
+
+
+[dependencies]
+uniffi = { version = "0.31.0", features = ["cli", "tokio"] }
+warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", default-features = false}
+tokio = "1.51.1"
+thiserror = "2.0.18"
+tracing = "0.1.44"
+tracing-android = { version = "0.2.0", optional = true }
+tracing-subscriber = { version = "0.3.23", optional = true }
+async-trait = "0.1.89"
+
+[dev-dependencies]
+uniffi = { version = "0.31.0", features = ["build"] }
+
+[features]
+default = ["messaging", "power_manager"]
+messaging = ["warpinator-lib/messaging"]
+power_manager = ["warpinator-lib/power_manager"]
+real_filesystem = ["warpinator-lib/real_filesystem"]
+virtual_filesystem = ["warpinator-lib/virtual_filesystem"]
+tracing_android = ["tracing-android", "tracing-subscriber"]
+tracing_callbacks = ["tracing-subscriber"]
+tracing_release_max_level_debug = ["tracing/release_max_level_debug" ]
