@@ -24,8 +24,8 @@ strip = true
 
 
 [dependencies]
-uniffi = { version = "0.31.0", features = ["cli", "tokio"] }
-warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", default-features = false}
+uniffi = { version = "0.32.0", features = ["cli", "tokio"] }
+warpinator-lib = {path = "../core", default-features = false}
 tokio = "1.51.1"
 thiserror = "2.0.18"
 tracing = "0.1.44"
@@ -34,7 +34,7 @@ tracing-subscriber = { version = "0.3.23", optional = true }
 async-trait = "0.1.89"
 
 [dev-dependencies]
-uniffi = { version = "0.31.0", features = ["build"] }
+uniffi = { version = "0.32.0", features = ["build"] }
 
 [features]
 default = ["messaging", "power_manager"]

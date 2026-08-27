@@ -1,4 +1,4 @@
-# Warpinator Library in Rust
+# Warpinator Lib
 
 A simple implementation of the [Warpinator](https://github.com/linuxmint/warpinator) protocol in Rust.
 Note that this library is still in development and may not be fully functional yet and does not support the version 1 of
@@ -23,7 +23,3 @@ implementation.
 - [x] Implement file transfers
 - [ ] Compression
 - [ ] ipv6 support
-
-## License
-
-Licensed under the GNU General Public License v3.0 or later. See [LICENSE](./LICENSE.md) for more details.

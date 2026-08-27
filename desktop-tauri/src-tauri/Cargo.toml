@@ -24,7 +24,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 tracing = { version = "0.1.44", features = ["release_max_level_debug"] }
-warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", features = ["serde"] }
+warpinator-lib = {path = "../../core", features = ["serde"] }
 tokio = { version = "1.50.0", features = ["full"] }
 tauri = { version = "2", features = ["tray-icon", "image-png"] }
 tauri-plugin-os = "2.3.2"
