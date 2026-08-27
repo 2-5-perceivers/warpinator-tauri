@@ -43,6 +43,7 @@ import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
@@ -61,6 +62,7 @@ import org.perceivers25.warpinator.core.design.components.DynamicAvatarCircle
 import org.perceivers25.warpinator.core.design.theme.WarpinatorTheme
 import org.perceivers25.warpinator.core.model.ui.RemoteUi
 import org.perceivers25.warpinator.core.notification.components.NotificationInhibitor
+import org.perceivers25.warpinator.core.utils.ProfilePicturePainter
 import org.perceivers25.warpinator.core.utils.RemoteDisplayInfo
 import org.perceivers25.warpinator.feature.home.components.MessageBubble
 
@@ -385,9 +387,14 @@ private fun MessagesPanePreview() {
     ).reversed()
 
     val remote = RemoteUi(
-        displayName = "Test Device",
-        username = "user",
-        hostname = "hostname",
+        uuid = "remote2",
+        displayName = "Favy",
+        username = "favy",
+        hostname = "favys-phone",
+        ip = "192.168.0.100",
+        state = RemoteState.Connected,
+        picture = ProfilePicturePainter.getProfilePicture("1", LocalContext.current),
+        isFavorite = true,
     )
 
     WarpinatorTheme {

@@ -46,11 +46,13 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,6 +65,7 @@ import org.perceivers25.warpinator.core.design.components.MessagesHandlerEffect
 import org.perceivers25.warpinator.core.design.theme.WarpinatorTheme
 import org.perceivers25.warpinator.core.model.ui.RemoteUi
 import org.perceivers25.warpinator.core.utils.KeyboardShortcuts
+import org.perceivers25.warpinator.core.utils.ProfilePicturePainter
 import org.perceivers25.warpinator.feature.home.components.HomeMenu
 import org.perceivers25.warpinator.feature.home.components.RemoteListItem
 import org.perceivers25.warpinator.feature.manual_connection.ManualConnectionDialog
@@ -374,24 +377,37 @@ fun RemoteListPaneContent(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun RemotePanePreview() {
+val context = LocalContext.current
+
     val remote = RemoteUi(
         uuid = "remote",
-        displayName = "Test Device",
+        displayName = "User",
         username = "user",
-        hostname = "hostname",
+        hostname = "my-other-device",
         ip = "192.168.0.100",
         state = RemoteState.Connected,
-        picture = null,
+        picture = ProfilePicturePainter.getProfilePicture("8", context),
         isFavorite = false,
+    )
+
+    val remote2 = RemoteUi(
+        uuid = "remote2",
+        displayName = "Favy",
+        username = "favy",
+        hostname = "favys-phone",
+        ip = "192.168.0.100",
+        state = RemoteState.Connected,
+        picture = ProfilePicturePainter.getProfilePicture("1", context),
+        isFavorite = true,
     )
 
 
     WarpinatorTheme {
         RemoteListPaneContent(
-            remotes = listOf(remote),
+            remotes = listOf(remote, remote2),
             onRemoteClick = {},
             onFavoriteToggle = {},
             state = ServiceState.Ok,

@@ -56,6 +56,7 @@ import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -88,6 +89,7 @@ import org.perceivers25.warpinator.core.model.ui.TransferKindUi
 import org.perceivers25.warpinator.core.model.ui.TransferUi
 import org.perceivers25.warpinator.core.notification.components.NotificationInhibitor
 import org.perceivers25.warpinator.core.utils.KeyboardShortcuts
+import org.perceivers25.warpinator.core.utils.ProfilePicturePainter
 import org.perceivers25.warpinator.feature.home.components.RemoteLargeFlexibleTopAppBar
 import org.perceivers25.warpinator.feature.home.components.TransferFloatingActionButton
 import org.perceivers25.warpinator.feature.home.components.TransferListItem
@@ -610,9 +612,14 @@ private fun TransfersPanePreview() {
     )
 
     val remote = RemoteUi(
-        displayName = "Test Device",
-        username = "user",
-        hostname = "hostname",
+        uuid = "remote2",
+        displayName = "Favy",
+        username = "favy",
+        hostname = "favys-phone",
+        ip = "192.168.0.100",
+        state = RemoteState.Connected,
+        picture = ProfilePicturePainter.getProfilePicture("1", LocalContext.current),
+        isFavorite = true,
     )
 
     WarpinatorTheme {
