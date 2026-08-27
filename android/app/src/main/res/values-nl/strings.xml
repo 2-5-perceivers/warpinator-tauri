@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quit_label">Beëindigen</string>
+    <string name="reannounce_label">Heraankondiging</string>
+    <string name="about_title">Over (…?)</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="available_devices_title">Beschikbare apparaten</string>
+    <string name="no_devices_found">Geen andere apparaten gevonden</string>
+    <string name="connection_error">Verbindingsfout</string>
+    <string name="transfer_state_waiting_permission">Wachtend op toestemming…</string>
+    <string name="notification_settings_title">Toon notificatie van binnenkomende bestanden</string>
+    <string name="light_theme">Licht kleurthema</string>
+    <string name="warpinator_notification_button">Stop de service</string>
+    <string name="connection_issues_label">Verbindingsproblemen</string>
+    <string name="save_log_label">Bewaar logging</string>
+    <string name="manual_connection_label">Handmatige verbinding</string>
+    <string name="rescan_label">Scan opnieuw voor apparaten</string>
+    <string name="share_with_title">Deel met</string>
+    <string name="display_settings_title">Weergavenaam</string>
+    <string name="download_dir_settings_title">Downloadfolder</string>
+    <string name="picture_settings_title">Profielafbeelding</string>
+    <string name="system_default_theme">Gebruik systeemdefault</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d verzendingen, %3$s/s</string>
+    <string name="notification_channel_description">Aanhoudende/Blijvende? servicenotificatie</string>
+    <string name="version">Versie: %1$s</string>
+    <string name="identity_settings_category">Identiteit</string>
+    <string name="transfer_settings_category">Verzendinstellingen</string>
+    <string name="network_settings_category">Netwerk</string>
+    <string name="aspect_settings_category">Aspect?</string>
+    <string name="dark_theme">Donker kleurthema</string>
+    <string name="warpinator_notification_title">Warpinatorservice draait</string>
+    <string name="incoming_transfer_notification">Binnenkomende verzending van %s</string>
+    <string name="service_running">Service draait?</string>
+    <string name="incoming_transfer_channel">Binnenkomende verzending</string>
+    <string name="transfer_progress_channel">Voortgang verzending</string>
+    <string name="reconnect_button_label">Opnieuw verbinden</string>
+    <string name="accept_settings_summary_on">Verzendingen worden automatisch geaccepteerd</string>
+    <string name="stop_service_when_leaving_summary_off">Als de service eenmaal gestart is, blijft die draaien totdat ze handmatig gestopt wordt</string>
+    <string name="overwrite_settings_title">Sta overschrijven toe</string>
+    <string name="accept_settings_title">Verzending automatisch accepteren</string>
+    <string name="compression_settings_title">Probeer compressie te gebruiken</string>
+    <string name="accept_settings_summary_off">Elke verzending moet door jou geaccepteerd worden</string>
+    <string name="stop_service_when_leaving_summary_on">De service wordt automatisch gestopt wanneer deze wordt verwijderd uit ?recents? of na een periode van inactiviteit.</string>
+</resources>

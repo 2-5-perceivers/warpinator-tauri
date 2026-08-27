@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title">Om</string>
+    <string name="light_theme">Lys drakt</string>
+    <string name="quit_label">Avslutt</string>
+    <string name="connection_error">Tilkoblingsfeil</string>
+    <string name="transfer_state_waiting_permission">Venter på tilgang …</string>
+    <string name="port_settings_title">Port</string>
+    <string name="theme_settings_title">Drakt</string>
+    <string name="port_range_warning">Portnummer må være mellom 1024 og 65535</string>
+    <string name="system_default_theme">Bruk systemforvalg</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d overføringer, %3$s/s</string>
+    <string name="service_running">Tjenesten kjører</string>
+    <string name="notification_channel_description">Vedvarende tjenestemerknad</string>
+    <string name="incoming_transfer_channel">Innkommende overføring</string>
+    <string name="connection_issues_label">Tilkoblingsproblemer</string>
+    <string name="rescan_label">Se etter enheter igjen</string>
+    <string name="reannounce_label">Reannonser</string>
+    <string name="settings_title">Innstillinger</string>
+    <string name="share_with_title">Del med</string>
+    <string name="available_devices_title">Tilgjengelige enheter</string>
+    <string name="no_devices_found">Fant ingen andre enheter</string>
+    <string name="boot_settings_title">Start automatisk</string>
+    <string name="version">Versjon: %1$s</string>
+    <string name="overwrite_settings_title">Tillat overskriving</string>
+    <string name="dark_theme">Mørk drakt</string>
+    <string name="warpinator_notification_button">Stopp tjenesten</string>
+    <string name="warpinator_notification_title">Warpinator-tjenesten kjører</string>
+    <string name="incoming_transfer_notification">Innkommende overføring fra %s</string>
+    <string name="transfer_progress_channel">Overføringsfremdrift</string>
+    <string name="reconnect_button_label">Koble til igjen</string>
+</resources>

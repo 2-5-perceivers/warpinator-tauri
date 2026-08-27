@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quit_label">Tuffɣa</string>
+    <string name="identity_settings_category">Tamagit</string>
+    <string name="reconnect_button_label">Ales tuqqna</string>
+    <string name="save_log_label">Sekles aɣmis</string>
+    <string name="settings_title">Iɣewwaren</string>
+    <string name="manual_connection_label">Tuqqna s ufus</string>
+    <string name="share_with_title">Bḍu d</string>
+    <string name="available_devices_title">Ibenkan i yellan</string>
+    <string name="rescan_label">Anadi ɣef ibenkan imaynuten</string>
+    <string name="connection_error">Tuccḍa n tuqqna</string>
+    <string name="network_settings_category">Aẓeṭṭa</string>
+    <string name="version">Lqem: %1$s</string>
+    <string name="picture_settings_title">Tugna n umaɣnu</string>
+    <string name="download_dir_settings_title">Akaram n isidar</string>
+    <string name="theme_settings_title">Asentel</string>
+    <string name="boot_settings_title">Sekker s wudem awurman</string>
+    <string name="group_code_settings_title">Tangalt n wegraw</string>
+    <string name="light_theme">Asentel aceɛlal</string>
+    <string name="dark_theme">Asentel ubrik</string>
+    <string name="system_default_theme">Seqdec imezwura n unagraw</string>
+    <string name="about_title">Ɣef</string>
+    <string name="aspect_settings_category">Udem</string>
+</resources>

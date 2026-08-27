@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  App Name  -->
+    <string name="app_name" translatable="false">Warpinator</string>
+
+
+    <!-- ==================== Actions ==================== -->
+
+    <string name="back_button_label">Back</string>
+    <string name="open_menu_label">Open menu</string>
+    <string name="copy_label">Copy</string>
+    <string name="share_label">Share</string>
+    <string name="delete_label">Delete</string>
+    <string name="confirm_edit_label">Confirm edit</string>
+    <string name="close_label">Close</string>
+    <string name="save_label">Save</string>
+    <string name="send_label">Send</string>
+    <string name="done_label">Done</string>
+
+
+    <!-- ==================== Accessibility ==================== -->
+
+    <!--  Accessibility state: announced by TalkBack when an item is expanded  -->
+    <string name="expanded_state">Expanded</string>
+    <!--  Accessibility state: announced by TalkBack when an item is collapsed  -->
+    <string name="collapsed_state">Collapsed</string>
+    <!--  Semantic onClick label for collapsing an expanded item  -->
+    <string name="collapse_action">collapse</string>
+    <!--  Semantic onClick label for expanding an item to show details  -->
+    <string name="expand_details_action">expand details</string>
+    <string name="remote_ip_content_description">IP: %1$s</string>
+    <!--  Semantic onClick label for toggling favorite status via swipe  -->
+    <string name="toggle_favorite_action">Toggle favorite</string>
+    <!--  Semantic onClick label read by TalkBack as an infinitive action (e.g., "Double tap to…")  -->
+    <string name="select_device_action">select device</string>
+    <!--  Custom accessibility action: deletes a transfer from history  -->
+    <string name="delete_transfer_action">Delete transfer</string>
+    <!--  Custom accessibility action: accepts an incoming transfer  -->
+    <string name="accept_transfer_action">Accept transfer</string>
+    <!--  Custom accessibility action: declines an incoming transfer  -->
+    <string name="decline_transfer_action">Decline transfer</string>
+    <!--  Custom accessibility action: stops an ongoing transfer  -->
+    <string name="stop_transfer_action">Stop transfer</string>
+    <!--  Custom accessibility action: cancels a pending transfer  -->
+    <string name="cancel_transfer_action">Cancel transfer</string>
+    <!--  Custom accessibility action: retries a failed transfer  -->
+    <string name="retry_transfer_action">Retry transfer</string>
+    <!--  Custom accessibility action: opens a transfer item for viewing  -->
+    <string name="open_transfer_item_action">Open transfer item</string>
+    <string name="copy_url_action">Copy URL</string>
+    <!--  Semantic label for the send button. This should follow "to" as in "to send"  -->
+    <string name="send_action">Send</string>
+    <!--  Accessibility state for the send button when the remote doesn't support text  -->
+    <string name="device_does_not_support_text_messages_state">Device does not support text messages</string>
+    <!--  Accessibility state for the send button when the remote is disconnected  -->
+    <string name="device_is_disconnected_state">Device is disconnected</string>
+    <!--  Accessibility state for the send button when the text field is empty  -->
+    <string name="message_is_empty_state">Message is empty</string>
+    <string name="sent_message_content_description">Sent message: %1$s</string>
+    <string name="received_message_content_description">Received message: %1$s</string>
+    <string name="sent_at_content_description">Sent at: %1$s</string>
+    <string name="received_at_content_description">Received at: %1$s</string>
+    <!--  Custom accessibility action: deletes a message  -->
+    <string name="delete_message_action">Delete message</string>
+    <!--  Custom accessibility action: copies a message  -->
+    <string name="copy_message_action">Copy message</string>
+    <!--  Custom accessibility action: shares a message  -->
+    <string name="share_message_action">Share message</string>
+    <!--  Accessibility state for a favorite remote  -->
+    <string name="favorite_label">Favorite</string>
+    <!--  Accessibility state for a non-favorite remote  -->
+    <string name="not_favorite_label">Not favorite</string>
+    <!--
+        Profile picture selector label. %1$d is the 1-based index.
+        Example: "Profile picture 3"
+    -->
+    <string name="profile_picture_label">Profile picture %1$d</string>
+
+
+    <!-- ==================== Remotes Pane ==================== -->
+
+    <!--  Menu action to close the app  -->
+    <string name="quit_label">Quit</string>
+    <!--  Menu item that opens a help page about connection issues  -->
+    <string name="connection_issues_label">Connection issues</string>
+    <string name="manual_connection_label">Manual connection</string>
+    <!--  Menu item to export/save the debug log  -->
+    <string name="save_log_label">Save log</string>
+    <!--  Menu action to re-announce this device on the network. "Reannounce" is a protocol-specific term and may be kept untranslated if no equivalent exists.  -->
+    <string name="reannounce_label">Reannounce</string>
+    <!--  Menu action to rescan the network for other devices. Can be translated as Refresh  -->
+    <string name="rescan_label">Rescan for devices</string>
+    <string name="about_title">About</string>
+    <string name="settings_title">Settings</string>
+    <string name="available_devices_title">Available devices</string>
+    <string name="no_devices_found">No other devices found</string>
+    <string name="connection_error">Connection error</string>
+    <string name="no_internet_connection_title">No Internet Connection</string>
+    <string name="no_internet_connection_subtitle">Connect via WiFi, LAN, or Hotspot, then restart the app.</string>
+
+
+    <!-- ==================== Transfers Pane ==================== -->
+
+    <string name="reconnect_button_label">Reconnect</string>
+    <string name="clear_transfer_history_label">Clear transfer history</string>
+    <string name="remove_from_favorites_label">Remove from favorites</string>
+    <string name="add_to_favorites_label">Add to favorites</string>
+    <string name="transfers_history_list_content_description">Transfers history</string>
+    <string name="no_transfers_yet">No transfers yet</string>
+    <string name="accept_label">Accept</string>
+    <string name="decline_label">Decline</string>
+    <string name="stop_label">Stop</string>
+    <string name="retry_label">Retry</string>
+    <string name="open_item_label">Open</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="send_file_label">Send File</string>
+    <string name="send_folder_label">Send Folder</string>
+    <string name="send_message_label">Send Message</string>
+    <plurals name="transfers_count">
+        <item quantity="one">%1$d transfer</item>
+        <item quantity="other">%1$d transfers</item>
+    </plurals>
+    <plurals name="messages_count">
+        <item quantity="one">%1$d message</item>
+        <item quantity="other">%1$d messages</item>
+    </plurals>
+    <string name="send_message_dialog_title">Send a message</string>
+    <string name="drop_here_to_send">Drop here to send</string>
+
+
+    <!-- ==================== Manual Connection ==================== -->
+
+    <string name="manual_connect_text">Scan the QR code above with a camera app and open the link or use the following address to initiate the connection from the other device:</string>
+    <string name="manual_connection_success_label">Device connected</string>
+    <string name="manual_connection_connecting_title">Connecting to</string>
+    <string name="manual_connection_already_connected">Device already connected</string>
+    <string name="manual_connection_already_connecting">Connection already in progress</string>
+    <string name="manual_connection_failed">Connection failed</string>
+    <string name="manual_connection_not_same_subnet">Device not on same subnet</string>
+    <string name="manual_connection_not_supported">Device does not support manual connection</string>
+    <string name="add_connection_label">Add connection</string>
+    <string name="qr_code_content_description">QR Code of a connection URL</string>
+    <string name="ip_address_label">IP Address</string>
+    <string name="invalid_address_error">Please select or type a valid address</string>
+    <string name="recent_remotes_label">Recent remotes</string>
+    <string name="no_recent_remotes">No recent remotes</string>
+    <string name="paste_address_from_clipboard_label">Paste address from clipboard</string>
+    <string name="from_clipboard_recent_remote_label">From clipboard</string>
+
+
+    <!-- ==================== Messages Pane ==================== -->
+
+    <string name="messages">Messages</string>
+    <string name="message_text_field_placeholder">Message…</string>
+    <string name="message_history_with_content_description">Message history with %1$s</string>
+    <string name="sent_message_state">Sent message</string>
+    <string name="received_message_state">Received message</string>
+    <string name="hide_timestamp_label">Hide timestamp</string>
+    <string name="show_timestamp_label">Show timestamp</string>
+    <string name="open_message_options_label">Open message options</string>
+
+
+    <!-- ==================== About Screen ==================== -->
+
+    <string name="version">Version: %1$s</string>
+    <!--
+        "GNU General Public License v3.0" is the official name of the license
+        and should be kept in English unless your language has a widely
+        recognized translation established by the community.
+    -->
+    <string name="warranty">This software is licensed under the GNU General Public License v3.0 and is available as open source on GitHub.\n\nThis program comes with ABSOLUTELY NO WARRANTY. See the terms of the license for more details.</string>
+    <string name="help_translate_title">Help translate Warpinator</string>
+    <string name="help_translate_subtitle">Translate Warpinator in your language</string>
+    <string name="rate_on_google_play_title">Rate on Google Play</string>
+    <string name="rate_on_google_play_subtitle">Enjoying the app? Rate it on Google Play!</string>
+    <string name="see_the_source_code_title">See the source code</string>
+    <string name="contributions_are_welcome_subtitle">Contributions are welcome</string>
+    <string name="issues_title">Issues</string>
+    <string name="issues_subtitle">Have an issue? Report it here!</string>
+    <string name="license_title">License</string>
+    <!--
+        "GNU General Public License v3.0" is the official name of the license
+        and should be kept in English unless your language has a widely
+        recognized translation established by the community.
+    -->
+    <string name="license_type">GNU General Public License v3.0</string>
+
+
+    <!-- ==================== Settings Screen ==================== -->
+
+    <string name="identity_settings_category">Identity</string>
+    <string name="transfer_settings_category">Transfer settings</string>
+    <string name="app_behavior_settings_category">App behavior</string>
+    <string name="network_settings_category">Network</string>
+    <string name="aspect_settings_category">Aspect</string>
+    <string name="display_settings_title">Display name</string>
+    <string name="picture_settings_title">Profile picture</string>
+    <string name="download_dir_settings_title">Downloads directory</string>
+    <string name="notification_settings_title">Show notification about incoming files</string>
+    <string name="overwrite_settings_title">Allow overwriting</string>
+    <string name="accept_settings_title">Automatically accept transfers</string>
+    <string name="accept_settings_summary_on">Transfers will be accepted automatically</string>
+    <string name="accept_settings_summary_off">Every transfer needs to be accepted by you</string>
+    <string name="compression_settings_title">Try use compression</string>
+    <string name="boot_settings_title">Start automatically</string>
+    <string name="boot_settings_summary_a15">Autostart unavailable on Android 15+</string>
+    <string name="stop_service_when_leaving_title">Stop service after leaving app</string>
+    <string name="stop_service_when_leaving_summary_on">The service will be stopped automatically when cleared from recents or after a period of inactivity</string>
+    <string name="stop_service_when_leaving_summary_off">Once started, the service will continue to run until manually stopped</string>
+    <string name="export_log_settings_title">Write debug log to file</string>
+    <string name="group_code_settings_title">Group code</string>
+    <string name="port_settings_title">Port for transfers</string>
+    <string name="auth_port_settings_title">Port for registration</string>
+    <string name="network_interface_settings_title">Preferred network interface</string>
+    <!--
+        Network interface fallback hint. %s is the interface name.
+        Example: "wlan0 (falls back to automatic if unavailable)"
+    -->
+    <string name="network_interface_settings_summary">%s (falls back to automatic if unavailable)</string>
+    <string name="theme_settings_title">Theme</string>
+    <string name="notification_settings_summary">This may be affected by Android\'s notification settings</string>
+    <string name="port_range_warning">Port number must be between 1024 and 65535</string>
+    <string name="requires_restart_warning">Changing this setting requires the application to be restarted</string>
+    <string name="overwrite_settings_summary_on">Incoming files with a name that already exists will overwrite the existing ones</string>
+    <string name="overwrite_settings_summary_off">Incoming files with a name that already exists will be renamed</string>
+    <string name="system_default_theme">Use system default</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="add_custom_picture">Add Custom Picture</string>
+    <string name="use_dynamic_colors_title">Use dynamic colors</string>
+    <string name="integrate_messages_with_transfers_title">Integrate messages with transfers</string>
+    <string name="integrate_messages_with_transfers_subtitle_on">Messages and file transfers are shown in a single list</string>
+    <string name="integrate_messages_with_transfers_subtitle_off">Messages and transfers are being kept in separate views</string>
+    <string name="change_profile_picture_title">Change profile picture</string>
+    <string name="failed_to_save_profile_picture">Failed to save profile picture: %1$s</string>
+    <string name="drop_image_here_to_set">Drop image here to set</string>
+
+
+    <!-- ==================== Notification ==================== -->
+
+    <string name="warpinator_notification_title">Warpinator service is running</string>
+    <string name="warpinator_notification_button">Stop service</string>
+    <string name="transfer_notification">%1$.1f%%, %2$d transfers, %3$s/s</string>
+    <string name="incoming_transfer_notification">Incoming transfer from %s</string>
+    <!--  Notification body: number of files in an incoming transfer  -->
+    <plurals name="notification_file_count">
+        <item quantity="one">%1$d file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
+    <!--  Notification channel name  -->
+    <string name="service_running">Service running</string>
+    <string name="notification_channel_description">Persistent service notification</string>
+    <string name="incoming_transfer_channel">Incoming transfer</string>
+    <string name="transfer_progress_channel">Transfer progress</string>
+    <string name="warpinator_notification_subtitle">Tap to open</string>
+    <string name="unknown">Unknown</string>
+    <string name="new_message_from">New message from %1$s</string>
+    <string name="messages_channel">Messages</string>
+    <!--  Format: "%1$d connected" – shown on Quick Settings tile  -->
+    <plurals name="qs_discovered_count">
+        <item quantity="other">%1$d connected</item>
+    </plurals>
+
+
+    <!-- ==================== Share ==================== -->
+
+    <string name="share_with_title">Share with</string>
+    <plurals name="files_selected">
+        <item quantity="one">%1$d file selected</item>
+        <item quantity="other">%1$d files selected</item>
+    </plurals>
+    <string name="tap_to_edit_hint">Tap to edit</string>
+    <plurals name="and_more">
+        <item quantity="other">%1$s, and %2$d more</item>
+    </plurals>
+
+
+    <!-- ==================== Service and Server States ==================== -->
+
+    <string name="restarting_warpinator_service">Restarting Warpinator…</string>
+    <string name="starting_warpinator_service">Starting Warpinator…</string>
+    <string name="stopping_warpinator_service">Stopping Warpinator…</string>
+    <string name="failed_to_start_warpinator">Failed to start Warpinator</string>
+    <!--  A label to go along the restarting service text to inform the user that the network has changed  -->
+    <string name="network_changed_state">Network changed</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="reannounce_failed_message">Reannounce failed: %1$s</string>
+    <string name="rescan_failed_message">Rescan failed: %1$s</string>
+    <string name="failed_to_start_grpc_server_message">Failed to start GRPC server. Please reboot the device or adjust port numbers.</string>
+    <string name="discovery_service_failed_message">Discovery service failed. Other devices might not see you.</string>
+    <string name="a_security_error_occurred_message">A security error occurred while starting. Please contact the developers.</string>
+    <string name="running_in_legacy_mode_message">Running in legacy mode. Some features may be limited.</string>
+    <string name="unregistering_failed_message">Unregistering failed: %1$s</string>
+    <string name="found_devices_using_different_group_codes_message">Found devices using different group codes. Make sure your current code is correct.</string>
+    <string name="could_not_save_log_to_file_message">Could not save log to file: %1$s</string>
+    <string name="dumped_log_file_to_selected_destination">Dumped log file to selected destination</string>
+
+
+    <!-- ==================== Remote States ==================== -->
+
+    <string name="remote_awaiting_duplex">Awaiting duplex</string>
+    <string name="remote_connecting">Connecting</string>
+    <string name="remote_connected">Connected</string>
+    <string name="remote_disconnected">Disconnected</string>
+    <string name="remote_failed_to_connect">Failed to connect\n%1$s</string>
+
+
+    <!-- ==================== Transfer States and Details ==================== -->
+
+    <!--
+    Indicates the total number of files involved in a transfer.
+    Example: "1 file", "24 files"
+    -->
+    <plurals name="transfer_files_count">
+        <item quantity="one">%1$d file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
+
+    <!--
+    Format used to show progress of a file transfer.
+    %1$s is the amount of data already transferred (e.g., "5.2 MB").
+    %2$s is the total size of the transfer (e.g., "10 MB").
+
+    Example: "5.2 MB / 10 MB"
+
+    Translators: You may change the separator (" / ") to match your locale's
+    standard for representing parts of a whole.
+    -->
+    <string name="transfer_short_status_fmt">%1$s / %2$s</string>
+    <!--
+    Format used to show progress of a file transfer and remaining time.
+    %1$s is the amount of data already transferred (e.g., "5.2 MB").
+    %2$s is the total size of the transfer (e.g., "10 MB").
+    %3$s is the current speed (e.g., "10kB/s").
+    %4$s is the remaining time label (e.g., "5m 30s remaining").
+
+    Example: "5.2 MB / 10 MB (10kB/s, 5m 30s remaining)"
+
+    Translators: You may change the separator (" / ") to match your locale's
+    standard for representing parts of a whole.
+    -->
+    <string name="transfer_long_status_fmt">%1$s / %2$s (%3$s, %4$s)</string>
+
+    <!--
+    Format used to represent the speed of a file transfer in a data size over
+    one second.
+    %1$s is the size (e.g., "15kB").
+
+    Example: "15kB/s"
+    -->
+    <string name="transfer_speed_fmt">%1$s/s</string>
+
+    <!--  A remaining time status that did not calculate yet or is indefinite  -->
+    <string name="time_indefinite">calculating…</string>
+
+    <!--  A remaining time status for when the time is estimated at more than 24h  -->
+    <string name="time_over_day">more than a day remaining</string>
+
+    <!--  A remaining time status for when the time is estimated at 5 seconds or less  -->
+    <string name="time_few_seconds_remaining">a few seconds remaining</string>
+
+    <!--
+    Format used to represent remaining seconds in a file transfer.
+    %1$d is the number of seconds remaining (e.g., "5").
+
+    Example: "5s remaining"
+
+    Translators: You may change the use of the "s" abbreviation and use full words if the
+    locale is not accommodated with "s"
+    -->
+    <plurals name="time_seconds_remaining">
+        <item quantity="one">%1$ds remaining</item>
+        <item quantity="other">%1$ds remaining</item>
+    </plurals>
+
+    <!--
+    Format used to represent remaining time in a file transfer in a BIG UNIT SMALLER UNIT
+    format.
+    %1$s is the big formatted unit (e.g., "5h", "20m").
+    %2$s is the small formatted unit (e.g., "30m", "5s").
+
+    Example: "30m 20s remaining", "5h 30m remaining"
+    -->
+    <string name="time_details_remaining_fmt">%1$s %2$s remaining</string>
+
+    <!--  Format for hours  -->
+    <plurals name="duration_hours_short">
+        <item quantity="other">%1$dh</item>
+    </plurals>
+    <!--  Format for minutes  -->
+    <plurals name="duration_minutes_short">
+        <item quantity="other">%1$dm</item>
+    </plurals>
+    <!--  Format for seconds  -->
+    <plurals name="duration_seconds_short">
+        <item quantity="other">%1$ds</item>
+    </plurals>
+
+    <string name="transfer_direction_receive_short">Receiving</string>
+    <string name="transfer_direction_send_short">Sending</string>
+    <string name="outgoing_transfer">Outgoing transfer</string>
+    <string name="incoming_transfer">Incoming transfer</string>
+
+    <string name="transfer_state_init">Initializing</string>
+    <string name="transfer_state_waiting_permission">Waiting for permission…</string>
+    <string name="transfer_state_waiting_permission_overwrite_warning">Waiting for permission… (File will be overwritten)</string>
+    <string name="transfer_state_declined">Declined</string>
+    <string name="transfer_state_canceled">Canceled</string>
+    <string name="transfer_state_paused">Paused</string>
+    <string name="transfer_state_stopped">Stopped</string>
+    <string name="transfer_state_failed">Failed</string>
+    <string name="transfer_state_finished">Finished</string>
+    <string name="transfer_state_finished_with_errors">Finished with errors</string>
+
+
+    <!-- ==================== Other ==================== -->
+
+    <string name="main_service_description">Enables Warpinator to discover other devices, send and receive files, and maintain active transfers in the background, ensuring reliable operation even when the app is not in use.</string>
+</resources>
