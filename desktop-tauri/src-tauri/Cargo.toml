@@ -1,0 +1,49 @@
+[package]
+name = "warpinator-tauri"
+version = "0.1.1"
+description = "A Tauri App"
+authors = ["2.5 Perceivers", "Rares Vanca"]
+edition = "2024"
+license = "GPL-3"
+homepage = "https://2-5-perceivers.github.io/#/warpinator"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "warpinator_tauri_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+tracing = { version = "0.1.44", features = ["release_max_level_debug"] }
+warpinator-lib = {git = "https://github.com/2-5-perceivers/warpinator-lib.git", features = ["serde"] }
+tokio = { version = "1.50.0", features = ["full"] }
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-os = "2.3.2"
+tauri-plugin-opener = "2"
+tauri-plugin-store = "2"
+tauri-plugin-process = "2"
+tauri-plugin-dialog = "2"
+whoami = "2.1.1"
+uuid = { version = "1.23.0", features = ["v4"] }
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg"] }
+tauri-plugin-clipboard-manager = "2"
+tauri-plugin-notification = "2"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance = "2"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = 3
+strip = true

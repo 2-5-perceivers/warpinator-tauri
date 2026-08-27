@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Warpinator",
+  "mainBinaryName": "warpinator",
+  "version": "0.1.1",
+  "identifier": "org.perceivers25.warpinator",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Warpinator",
+        "width": 1000,
+        "height": 600,
+        "minWidth": 800,
+        "minHeight": 400,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true
+      },
+      {
+        "title": "Settings",
+        "label": "settings",
+        "width": 400,
+        "height": 500,
+        "minWidth": 400,
+        "minHeight": 400,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true,
+        "maximizable": false,
+        "parent": "main",
+        "visible": false
+      },
+      {
+        "title": "About",
+        "label": "about",
+        "width": 400,
+        "height": 500,
+        "minWidth": 400,
+        "minHeight": 400,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": true,
+        "maximizable": false,
+        "parent": "main",
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "publisher": "2.5 Perceivers",
+    "shortDescription": "A blazing fast Warpinator client",
+    "category": "Utility"
+  }
+}
